@@ -1,4 +1,4 @@
-*.idea
+idea/
 #ignore pyc
 *.pyc
 */*.pyc
