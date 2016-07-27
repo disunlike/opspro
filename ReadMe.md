@@ -41,24 +41,87 @@ dash opspro/promanager.sh start gs
 ## 查看运行状态:
 dash opspro/promanager.sh status gs
 
-## 数据存储服务
-	dash opspro/promanager.sh start dts
-	dash opspro/promanager.sh stop dts
-
 # ecplise 设置：
-	1.显示换行符和缩进
-		Window->Preferences->General->Editors->Text Editors->Show whitespace characters
-	2.配置python ide
-	3.字体
-		Window->Preferences->general->appearance->colors and fonts->
-	4.编码设置为UTF-8
-		window->preferences->general->editors->text editors->spelling->encoding->UTF-8，编辑器的编码格式
-		window->preferences->workspace->text file encoding->UTF-8
-	5.设置换行符为Linux换行符
-		同设置编码
-	6.使用tab作为换行符
-		pydev->editor->replace tabs with spaces when typing
-	7.代码联想
-		和编译器的ide有关，python的设置方式是在windows中安装python的编译器有	
+1.显示换行符和缩进
+	Window->Preferences->General->Editors->Text Editors->Show whitespace characters
+2.配置python ide
+3.字体
+	Window->Preferences->general->appearance->colors and fonts->
+4.编码设置为UTF-8
+	window->preferences->general->editors->text editors->spelling->encoding->UTF-8，编辑器的编码格式
+	window->preferences->workspace->text file encoding->UTF-8
+5.设置换行符为Linux换行符
+	同设置编码
+6.使用tab作为换行符
+	pydev->editor->replace tabs with spaces when typing
+7.代码联想
+	和编译器的ide有关，python的设置方式是在windows中安装python的编译器有	
 
+# 游戏服务代码发布脚本
+```
+#/bin/dash
+ 
+ 
+type dos2unix || apt-get install dos2unix -y
+type dos2unix || exit 0
+ 
+ 
+type enca || apt-get install enca -y
+type enca || exit 0
+ 
+ 
+Path=$1
+ 
+if [ -z "${Path}" ];then
+ echo '需要路径参数'
+ exit
+fi
+ 
+ 
+ls ${Path} 2>/dev/null
+if [ "$?" != "0" ];then
+ echo '文件夹不存在'
+ exit
+fi
+ 
+ 
+Time=`date "+%Y-%m-%d_%H_%M"`
+ 
+ 
+FileName=`echo $Path|awk -F'/' '{print $NF}'`
+ 
+ 
+FileName=${FileName}.${Time}.gbk.tar.gz
+ 
+ 
+tar cvfz /tmp/tmp.tar.gz ${Path}
+ 
+ 
+#删除eclipse，git，.pyc文件。
+rm -r ${Path}/.*
+ 
+ 
+#删除编译过得pyc文件
+find ${Path}|grep -E *.pyc|xargs rm
+ 
+ 
+#删除Log
+rm -r ${Path}/Log
+ 
+ 
+#批量转换换行符
+find ${Path} -type f|xargs dos2unix
+ 
+ 
+#批量转码
+find ${Path} -type f|xargs enca -L zh_CN -x gbk
+ 
+ 
+#打包以提交
+tar cvfz ${FileName} ${Path}/
+ 
+ 
+#文件权限
+chown yzs ${FileName}
+```
 
