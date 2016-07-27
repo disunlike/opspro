@@ -5,7 +5,7 @@
 import urllib2
 import json
 
-
+# 返回的中文是unicode格式,print方法会自动将该格式按照当前系统的编码来转换
 class CSpider:
     def init(self):
         pass

@@ -45,8 +45,7 @@ def AlertLinux(sContent,sIMNumber):
 	#--quiet 安静模式，--spider 不下载  --tries表示报警次数  & 后台进行，当网络不可访问的时候不会引起阻塞
 	#可能是wget命令的bug。当使用--tries部分报价会失败
 	sShellCmd="wget --quiet -O /dev/null '%s' &"%(sUrl)
-	ExecShell(sShellCmd)
-
+	os.popen(sShellCmd)
 '''
 	说明：
 		通用报警，能在windows下使用

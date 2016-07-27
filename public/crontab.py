@@ -10,7 +10,7 @@ path:ServerManager/public/crontab.py
 #执行dmesg命令，然后根据不同的信息级别进行处理（m_DealType）
 import shellcmd
 from xmlstore import basetree
-from public.define import *
+from define import *
 
 class CRestart():
 	
