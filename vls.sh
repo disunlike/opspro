@@ -45,87 +45,12 @@ SetBasePath(){
 	BasePath=$(cd `dirname $0`;pwd)
 }
 
-InitModeGS(){
-	ExecUser=dy1
-	ScriptName='startupgs.py'
-	SetGSLogPath
-}
-
-InitModeALS(){
-	SetASLogPath
-	ScriptName='startupals.py'
-}
-
-InitModeDTS(){
-	SetDTSLogPath
-	ScriptName='startupdts.py'
-}
-
-InitModeCLS(){
-	SetCLSLogPath
-	ScriptName='startupcls.py'
-}
-
-InitError(){
-	echo '错误：没有匹配到模式,可选模式:als,gs,dts,cls'
-	Tip
-	exit
-}
-
-#增加一个模式的检查
-InitMode(){
-	Mode=$2
-	if [ "$Mode" = 'gs' ];then
-		InitModeGS $@
-	elif [ "$Mode" = 'als' ];then
-		InitModeALS $@
-	elif [ "$Mode" = 'dts' ];then
-		InitModeDTS $@
-	elif [ "$Mode" = 'cls' ];then
-		InitModeCLS $@
-	else
-		InitError
-	fi
-}
-
-#程序-lanwood(6349) 2016-2-4
-SetGSLogPath(){
-	#文件存在且可读
-	if [ -r /etc/gs.conf ];then
-		#在当前shell下执行该配置（只需要读权限，不需要执行权限）
-		. /etc/gs.conf
-		LogPath=/home/dy1/gs${SERVERNUM}/log/srvmgrlog
-		#创建路径本来不该写这的，考虑到shell脚本太容易乱了。还是贴着写吧
-	else
-		echo '错误：/etc/gs.conf文件不存在或者不具有读权限'
-		exit
-	fi
-}
-
-SetASLogPath(){
+SetLogPath(){
 	if [ -z $BasePath ];then
 		echo '错误：没有设置基础路径'
 		exit
 	else
-		LogPath=$BasePath/Log/alertserver/
-	fi
-}
-
-SetDTSLogPath(){
-	if [ -z $BasePath ];then
-		echo '错误：没有设置基础路径'
-		exit
-	else
-		LogPath=$BasePath/Log/dataserver/
-	fi
-}
-
-SetCLSLogPath(){
-	if [ -z $BasePath ];then
-		echo '错误：没有设置基础路径'
-		exit
-	else
-		LogPath=$BasePath/Log/collectserver/
+		LogPath=$BasePath/$1
 	fi
 }
 
@@ -205,31 +130,23 @@ Status(){
 }
 
 Version(){
-	if [ "$Mode" = 'gs' ];then
-		head -n1 $BasePath/gameserver/version.txt
-	elif [ "$Mode" = 'als' ];then
-		head -n1 $BasePath/alertserver/version.txt
-	elif [ "$Mode" = 'dts' ];then
-		head -n1 $BasePath/dataserver/version.txt
-	elif [ "$Mode" = 'cls' ];then
-		head -n1 $BasePath/collectserver/version.txt
-	fi
+	echo '输出版本号'
 }
 
 Tip(){
-	echo "语法：bash promanager start|stop|restart Mode
+	echo "语法：bash vls.sh start|stop|restart Mode
 	例如：
-	运行一个模式：bash promanager start
-	结束当前的程序：bash promanager stop
-	重启当前的程序:bash promanager restart
-	查看状态：bash promanager status"
+	运行一个模式：bash vls.sh start
+	结束当前的程序：bash vls.sh stop
+	重启当前的程序:bash vls.sh restart
+	查看状态：bash vls.sh status"
 }
 
 Init(){
-	Opt=$1			#第一个参数是操作类型
-	Pro=$2			#第二个参数是项目名称
+	Opt=$1
+	ScriptName='startupvls.py' #dasb等号两边不允许空格，否则被视为多个dash命令
 	SetBasePath
-	InitMode $@		#根据传参设置模式
+	SetLogPath Log/
 	SetScriptPath	#组合python脚本名和路径名获得脚本路径
 }
 
@@ -263,4 +180,3 @@ main(){
 
 Init $@
 main $@
-

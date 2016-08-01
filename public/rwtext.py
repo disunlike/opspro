@@ -10,18 +10,37 @@ import path
 import os
 
 
-class CLog():
+class CRWText():
     def __init__(self, sRootDir='', sPostfix='.txt'):
         self.m_RootDir = sRootDir  # 日记文件的根目录
         self.m_Postfix = sPostfix
 
-    def Write(self, sFilePath, sText, sMode='a+'):
+    # 缓存数据默认是清空重写的，并且不需要记录缓存的时间
+    # 在一个方法上加太多参数不好，所以这个方法从write中分离出来了。主要用于记录缓存
+    def Cache(self, sFilePath, sText, sMode='w+'):
         # 千万不要写if not sText,否则数字0和0.0都不能写！
         if not sFilePath:
             return
         if not isinstance(sText, str):
             sText = str(sText)
-        # self.CheckPathFormat(sFilePath)
+        sLogName = path.GetFileName(sFilePath)
+        sFolder = path.GetFilePath(sFilePath)
+        self.CheckNameFormat(sLogName)
+        if self.m_RootDir:
+            sDirPath = self.m_RootDir + '/' + sFolder
+        else:
+            sDirPath = sFolder
+        self.CreateFolder(sDirPath)
+        sCacheName = sDirPath + '/' + sLogName
+        self.WriteFile(sCacheName, sText, 'w+')
+
+    # 写日志默认是追加文本内容
+    def WriteLog(self, sFilePath, sText, sMode='a+'):
+        # 千万不要写if not sText,否则数字0和0.0都不能写！
+        if not sFilePath:
+            return
+        if not isinstance(sText, str):
+            sText = str(sText)
         sLogName = path.GetFileName(sFilePath)
         sFolder = path.GetFilePath(sFilePath)
         self.CheckNameFormat(sLogName)
@@ -32,7 +51,7 @@ class CLog():
         self.CreateFolder(sDirPath)
         sText = self.GetText(sText)
         sLogName = self.GetPath(sDirPath, sLogName)
-        self.WriteFile(sLogName, sText, sMode)
+        self.WriteFile(sLogName, sText, 'a+')
 
     def GetPath(self, sDirPath, sLogName):
         sLogName = sDirPath + '/' + sLogName + self.m_Postfix
@@ -56,23 +75,5 @@ class CLog():
         if not sName.find(self.m_Postfix):
             raise RuntimeError('不需要使用默认后缀')
 
-    def CheckPathFormat(self, sFilePath):
-        ResultList = sFilePath.split('/')
-        if len(ResultList) < 2:
-            raise RuntimeError('日志的存储至少是两极目录')
-
     def CreateFolder(self, sDirPath):
         path.CreateDir(sDirPath)
-
-
-# 做成GlobalManager就是为了避免import这个模块 --程序-基础研发-黄诚恩(2978) 2016-3-15 09:44:45
-# def Write(sFilePath,sText):
-#	if not sText:
-#		return
-#	oManager=GetGlobalManager("txtlog")
-#	if oManager:
-#		oManager.Write(sFilePath, sText)
-
-if __name__ == '__main__':
-    g_oLog = CLog('/tmp')
-    g_oLog.Write('debug', 0.0)

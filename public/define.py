@@ -9,7 +9,7 @@ from pubconf import *
 
 if not globals().has_key("g_GlobalManagerDict"):
 	g_GlobalManagerDict={}
-	
+
 def SetGlobalManager(sFlag,oManager):
 	global g_GlobalManagerDict
 	g_GlobalManagerDict[sFlag]=oManager
@@ -20,79 +20,18 @@ def GetGlobalManager(sFlag):
 	if sFlag in g_GlobalManagerDict:
 		return g_GlobalManagerDict[sFlag]
 	return None
-	
-	
+
+
 def GetManagerAttr(sMode,sAttr):
 	oManager=GetGlobalManager(sMode)
 	if oManager:
 		sAttr=getattr(oManager,sAttr,None)
 		return sAttr
-	
-	
-#因为使用这个方法一定需要GetGlobalManager方法，要有import　public.define相关操作，所以索性写这了
-def Log(LogPath,Content):
-	if not LogPath or not Content:
-		return
-	oManager=GetGlobalManager("txtlog")
-	if not oManager:
-		raise Exception('意想不到的错误：txtlog没有被初始化')
-	#尽量让转成列表的操作不出错
-	if isinstance(Content,list) or isinstance(Content,dict) or isinstance(Content,int):
-		oManager.Write(LogPath,str(Content))
-	elif isinstance(Content,str):
-		oManager.Write(LogPath,Content)
 
 
-#用于在不同情况下正确调用报警模块
-def Alert(Content,IMNumberList,iReAlertNum=0,sLogName=PATH_LOG_ALERT_HISTORY):
-	if not Content or not IMNumberList:
-		Log(PATH_LOG_INFO,'没有传给报警的对象或内容')
-		return
-	oManager=GetGlobalManager("alert")
-	if not oManager:
-		Log(PATH_LOG_ERR,'警告：alert没有被初始化')
-		return
-	#火星号只能是列表
-	if not isinstance(IMNumberList,list):
-		IMNumberList=[IMNumberList]
-	#Content只能是字典或者列表
-	if not isinstance(Content,dict) and not isinstance(Content,list):
-		Content=[Content]
-	
-	if isinstance(Content,list):
-		TmpList=[]
-		for IMNumber in IMNumberList:
-			if IMNumber in TmpList:		#列表中可能有重复的火星号，不需要重复报警
-				continue
-			TmpList.append(IMNumber)
-			for sContent in Content:
-				oManager.Alert(sContent,IMNumber,iReAlertNum,sLogName)
-	elif isinstance(Content,dict):
-		for IMNumber in IMNumberList:
-			oManager.Alert(Content,IMNumber,iReAlertNum,sLogName)
-
-
-def ExecShell(sShellCmd):
-	if not sShellCmd:
-		return
-	ShellCmdDict=GetGlobalManager('shelldict')
-	if not ShellCmdDict:
-		raise Exception('意想不到的错误：shelldict没有被初始化')
-	if ShellCmdDict.has_key(sShellCmd):
-		oShellCmd=ShellCmdDict[sShellCmd]
-		Result=oShellCmd.Start()
-		return Result
-	else:
-		oCustomCmd=ShellCmdDict['custom']
-		oCustomCmd.SetShellCmd(sShellCmd)
-		Result=oCustomCmd.Start()
-		return Result
-	
-	
 #获得当前时间的指定格式，如%s,获得当前时间的字符串时间戳,%S获得当前的秒针
 def GetTime(sFormat="%Y-%m-%d %H:%M:%S"):
-	t=time.localtime()
-	sTime=time.strftime(sFormat,t)
+	sTime=time.strftime(sFormat,time.localtime())
 	return sTime
 
 
@@ -126,7 +65,7 @@ def Call_Out(cbfunc,iDelay,sFlag,iPeriod=False): #参数：一个回调函数，
 def Remove_Call_Out(sFlag):
 	oManager=GetGlobalManager("timer") #获得全局变量中的timer，时间类的对象，他是一个负责计时
 	if not oManager:
-		return  
+		return
 	oManager.UnRegister(sFlag)
 
 
@@ -174,4 +113,3 @@ class Functor:
 
 	def SetType(self,a):
 		self.m_Type=a
-		
