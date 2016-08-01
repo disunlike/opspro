@@ -4,7 +4,7 @@ Created on Feb 1, 2016
 
 @author: yzs
 
-å¾ªç¯åˆ›å»ºç›®å½•çš„ä»£ç 
+Ñ­»·´´½¨Ä¿Â¼µÄ´úÂë
 
 #Demo:
 Create('/home/yzs/backup/a/a.txt')
@@ -15,20 +15,22 @@ Create('~/backup/e/')
 Create('~/backup/f')
 '''
 import os
+import re
+import shellcmd
 
-#BoolCreateFileåˆ¤æ–­æ˜¯å¦åˆ›å»ºæ–‡ä»¶
+#BoolCreateFileÅĞ¶ÏÊÇ·ñ´´½¨ÎÄ¼ş
 def Create(sPath,BoolCreateFile=True):
-	sPath=TranPath(sPath) #å°†~æ¢ä¸ºå®¶ç›®å½•
+	sPath=TranPath(sPath) #½«~»»Îª¼ÒÄ¿Â¼
 	if not IsAbsolutePath(sPath):
-		raise Exception('è¯·ä½¿ç”¨ç»å¯¹è·¯å¾„,Linuxä¸­çš„ç»å¯¹è·¯å¾„å¿…é¡»æ˜¯ä»¥æ ¹å¼€å¤´çš„')
-
+		raise Exception('ÇëÊ¹ÓÃ¾ø¶ÔÂ·¾¶,LinuxÖĞµÄ¾ø¶ÔÂ·¾¶±ØĞëÊÇÒÔ¸ù¿ªÍ·µÄ')
+	
 	if IsFilePath(sPath):
 		sDirPath=GetFilePath(sPath)
 		CreateDir(sDirPath)
 		if BoolCreateFile:
 			CreateFile(sPath)
 	else:
-		CreateDir(sPath)#å¾ªç¯å»ºç«‹ç›®å½•
+		CreateDir(sPath)#Ñ­»·½¨Á¢Ä¿Â¼
 
 
 def GetFileName(sPath):
@@ -52,8 +54,8 @@ def CreateFile(sPath):
 	open(sPath,'w')
 
 
-#å¾ªç¯åˆ›å»ºç›®å½•
-#å¦ä¸€ä¸ªå¥½çš„æ–¹æ³•:ä½¿ç”¨shellçš„mkdir -p,ç¼ºç‚¹æ˜¯å¹³å°ä¾èµ–
+#Ñ­»·´´½¨Ä¿Â¼
+#ÁíÒ»¸öºÃµÄ·½·¨:Ê¹ÓÃshellµÄmkdir -p,È±µãÊÇÆ½Ì¨ÒÀÀµ
 def CreateDir(sPath):
 	lstFullDir=CutPath(sPath)
 	lstExistDir=[]
@@ -69,21 +71,21 @@ def CutPath(sPath):
 	return lstPath
 
 
-#ç”¨äºå°†ï½ç¬¦å·è½¬ä¸ºè·¯å¾„çš„å½¢å¼
+#ÓÃÓÚ½«¡«·ûºÅ×ªÎªÂ·¾¶µÄĞÎÊ½
 def TranPath(sPath):
-	sPath=os.popen('echo %s'%sPath).read().rstrip()
+	sPath=shellcmd.Exec('echo %s'%sPath)
 	return sPath
 
 
 def IsAbsolutePath(sPath):
 	if not sPath:
-		raise RuntimeError('é”™è¯¯ï¼šä¸èƒ½ä½¿ç”¨ç©ºè·¯å¾„ä½œä¸ºä¼ å‚')
+		raise RuntimeError('´íÎó£º²»ÄÜÊ¹ÓÃ¿ÕÂ·¾¶×÷Îª´«²Î')
 	if sPath[0]=='/':
 		return 1
 	return 0
 
 
-#å•ç‹¬ä½¿ç”¨æ—¶ä¸åˆ¤æ–­æ˜¯å¦æ˜¯ç»å¯¹è·¯å¾„
+#µ¥¶ÀÊ¹ÓÃÊ±²»ÅĞ¶ÏÊÇ·ñÊÇ¾ø¶ÔÂ·¾¶
 def IsFilePath(sPath):
 	lstPath=os.path.split(sPath)
 	sFileName=lstPath[1]
@@ -98,21 +100,21 @@ def GetStdDir(sDirPath):
 	return sDirPath
 
 
-#è·å¾—é¡¹ç›®çš„è·¯å¾„
+#»ñµÃÏîÄ¿µÄÂ·¾¶
 def GetProPath():
 	sScriptPath=os.path.realpath(__file__)
-	#split and get path
+	#split and get path 
 	lstDirPath=os.path.split(os.path.realpath(__file__))
-	#split and get path
+	#split and get path 
 	sDirPath=lstDirPath[0]
 	lstPath=CutPath(sDirPath)
 	lstProPath=lstPath[0:-1]
 	if not lstProPath:
-		raise RuntimeError('é”™è¯¯ï¼šé¡¹ç›®ä¸åº”è¯¥è¢«ç›´æ¥æ”¾åœ¨æ ¹ç›®å½•')
+		raise RuntimeError('´íÎó£ºÏîÄ¿²»Ó¦¸Ã±»Ö±½Ó·ÅÔÚ¸ùÄ¿Â¼')
 	sProPath=GroupPath(lstProPath)
 	return sProPath
 
-#å®Œæ•´æµ‹è¯•,å»ºè®®èƒ½ä½¿ç”¨å•å…ƒæµ‹è¯•çš„éƒ½å¿…é¡»å†™
+#ÍêÕû²âÊÔ,½¨ÒéÄÜÊ¹ÓÃµ¥Ôª²âÊÔµÄ¶¼±ØĞëĞ´
 if __name__=='__main__':
 	def Test():
 		Create('/home/yzs/backup/a/a.txt')
@@ -122,3 +124,4 @@ if __name__=='__main__':
 		Create('~/backup/e/')
 		Create('~/backup/f')
 		print GetProPath()
+		
