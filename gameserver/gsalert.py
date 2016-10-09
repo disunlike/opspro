@@ -10,13 +10,8 @@ import subprocess
 
 class CGSAlert():
 	
-	def __init__(self):
-		self.m_AlertScriptPath=gsconf.PATH_SCRIPT_ALERT
-		self.m_AlertLog=GetGlobalManager('logpath')+"/debug.txt"
-	
-	
 	def Alert(self,sAlertMsg,IMNumber):
-		sShellCmd='sh %s %s "%s" &'%(self.m_AlertScriptPath,IMNumber,sAlertMsg)
+		sShellCmd='sh %s %s "%s" &'%(gsconf.PATH_SCRIPT_ALERT,IMNumber,sAlertMsg)
 		Log(PATH_LOG_DEBUG,sShellCmd)
 		oPopen=subprocess.Popen(sShellCmd,shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
 		#不使用下述方法，stdout产生的内容太多，会超过系统的buffer。导致程序被卡住！下面的方法不会导致程序阻塞
