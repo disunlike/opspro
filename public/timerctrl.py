@@ -3,7 +3,7 @@ import time
 import threading
 
 '''
-¼ÆÊ±Æ÷£¬¸ºÔğÒì²½µ÷ÓÃ¡£¶àÏß³Ì±à³ÌÖĞ±ØĞë×¢Òâ¼ÆÊ±Æ÷ÓëÆäËûÏß³ÌµÄ×ÊÔ´¾¹ÓÃÎÊÌâ
+è®¡æ—¶å™¨ï¼Œè´Ÿè´£å¼‚æ­¥è°ƒç”¨ã€‚å¤šçº¿ç¨‹ç¼–ç¨‹ä¸­å¿…é¡»æ³¨æ„è®¡æ—¶å™¨ä¸å…¶ä»–çº¿ç¨‹çš„èµ„æºç«Ÿç”¨é—®é¢˜
 '''
 
 class CTimerManager(threading.Thread):
@@ -11,12 +11,12 @@ class CTimerManager(threading.Thread):
 	def __init__(self):
 		super(CTimerManager,self).__init__()
 		#sFlag:(iEndTime,iDelay,cbfunc,bPeriod)
-		self.m_TimerDict={} #¸ÃÀà¶ÔÕâ¸ö×Öµä½øĞĞÂÖÑ¯
+		self.m_TimerDict={} #è¯¥ç±»å¯¹è¿™ä¸ªå­—å…¸è¿›è¡Œè½®è¯¢
 		self.m_bStop=False
 		self.start()
 		
 		
-	#Ã¿Ãë¶¼¼ì²éÕâ¸ö×Öµä
+	#æ¯ç§’éƒ½æ£€æŸ¥è¿™ä¸ªå­—å…¸
 	def run(self):
 		while True:
 			if self.m_bStop:
@@ -25,25 +25,25 @@ class CTimerManager(threading.Thread):
 			self.CheckTimeOut()
 
 
-	#¹Ø±Õ¶¨Ê±Æ÷
+	#å…³é—­å®šæ—¶å™¨
 	def StopTimer(self):
 		self.m_bStop=True
 
 
-	#×¢²á¶¨Ê±»Øµ÷º¯Êı
+	#æ³¨å†Œå®šæ—¶å›è°ƒå‡½æ•°
 	def Register(self,cbfunc,iDelay,sFlag,bPeriod=False):
 		curtime=time.time()
 		iEndTime=curtime+iDelay
 		self.m_TimerDict[sFlag]=(iEndTime,iDelay,cbfunc,bPeriod)
 
 
-	#È¡Ïû×¢²á¶¨Ê±»Øµ÷º¯Êı
+	#å–æ¶ˆæ³¨å†Œå®šæ—¶å›è°ƒå‡½æ•°
 	def UnRegister(self,sFlag):
 		if sFlag in self.m_TimerDict:
 			del self.m_TimerDict[sFlag]
 
 
-	#¶¨Ê±¼ì²éÊÇ·ñ³¬Ê±
+	#å®šæ—¶æ£€æŸ¥æ˜¯å¦è¶…æ—¶
 	def CheckTimeOut(self):
 		tmpList=[]
 		curtime=time.time()
@@ -56,7 +56,7 @@ class CTimerManager(threading.Thread):
 		for sFlag in tmpList:
 			iEndTime,iDelay,cbfunc,bPeriod=self.m_TimerDict[sFlag]
 			del self.m_TimerDict[sFlag]
-			if bPeriod: #Õâ¸öÖÜÆÚ¿ÉÒÔ¸ÄÎªÊı×Ö£¬ÒÔ¿ØÖÆÖ´ĞĞµÄ´ÎÊı,²¼¶ûÖµ×´Ì¬ÏÂÊÇ±íÊ¾ÊÇ·ñÑ­»·
+			if bPeriod: #è¿™ä¸ªå‘¨æœŸå¯ä»¥æ”¹ä¸ºæ•°å­—ï¼Œä»¥æ§åˆ¶æ‰§è¡Œçš„æ¬¡æ•°,å¸ƒå°”å€¼çŠ¶æ€ä¸‹æ˜¯è¡¨ç¤ºæ˜¯å¦å¾ªç¯
 				iEndTime=curtime+iDelay
 				self.m_TimerDict[sFlag]=(iEndTime,iDelay,cbfunc,bPeriod)
 			cbfunc()

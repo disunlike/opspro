@@ -1,12 +1,12 @@
 # -*- coding:utf-8 -*-
 '''
-¼æÈİÎÊÌâËµÃ÷£º
+å…¼å®¹é—®é¢˜è¯´æ˜ï¼š
 /proc/net/dev
 	debian6
-		eth0:ÊıÖµ(Ã»ÓĞ¿Õ¸ñ)
+		eth0:æ•°å€¼(æ²¡æœ‰ç©ºæ ¼)
 	debian7
-		eth0: ÊıÖµ(ÓĞ¿Õ¸ñ)
-	´¦Àí·½Ê½£º½«¡®:¡¯×ªÎª¿Õ¸ñ¡£
+		eth0: æ•°å€¼(æœ‰ç©ºæ ¼)
+	å¤„ç†æ–¹å¼ï¼šå°†â€˜:â€™è½¬ä¸ºç©ºæ ¼ã€‚
 '''
 import basedev
 
@@ -40,19 +40,19 @@ class CDev(basedev.CBaseDev):
 		return dNetworkCark
 	
 	
-	#Ä¬ÈÏÇé¿öÏÂµÃµ½eth0Íø¿¨ÊÕµ½µÄÊı¾İbytes
+	#é»˜è®¤æƒ…å†µä¸‹å¾—åˆ°eth0ç½‘å¡æ”¶åˆ°çš„æ•°æ®bytes
 	def Traff(self,sNetCark='eth0',sDirection='recv',sType='bytes'):
 		dTraff=self.Start()
 		if not sNetCark in dTraff:
-			sErr='²»´æÔÚÍø¿¨%s'%(sNetCark)
+			sErr='ä¸å­˜åœ¨ç½‘å¡%s'%(sNetCark)
 			raise Exception(sErr)
 		
 		if not sDirection in dTraff[sNetCark]:
-			sErr='Ö»ÓĞÊÕºÍ·¢Á½¸ö·½Ïò,recv,send'
+			sErr='åªæœ‰æ”¶å’Œå‘ä¸¤ä¸ªæ–¹å‘,recv,send'
 			raise Exception(sErr)
 		
 		if not sType in dTraff[sNetCark][sDirection]:
-			sErr='¼ÆÁ¿µ¥Î»Ö»ÄÜÊÇbyte»òpackets'
+			sErr='è®¡é‡å•ä½åªèƒ½æ˜¯byteæˆ–packets'
 			raise Exception(sErr)
 		return dTraff[sNetCark][sDirection][sType]
 		

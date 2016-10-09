@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
-# ÓÈÔóË³
-# 2016Äê1ÔÂ12ÈÕ
+# å°¤æ³½é¡º
+# 2016å¹´1æœˆ12æ—¥
 
 from public.define import *
 from define import *
@@ -13,9 +13,9 @@ def Normal():
 
 
 def DosStart():
-	sTitle		='¡¾%s¡¿%s'					%(GetTitle(),GetIP())
-	sSpeed		='[µ±Ç°ËÙ¶È]%.2f m/s'			%(float(GetSpeed()/1000.0))
-	sSlope		='[µ±Ç°ËÙ¶È±ä»¯ÂÊ]%i kb/s^2'	%(GetSlope())
+	sTitle		='ã€%sã€‘%s'					%(GetTitle(),GetIP())
+	sSpeed		='[å½“å‰é€Ÿåº¦]%.2f m/s'			%(float(GetSpeed()/1000.0))
+	sSlope		='[å½“å‰é€Ÿåº¦å˜åŒ–ç‡]%i kb/s^2'	%(GetSlope())
 	sBody		=sTitle+sSpeed+sSlope
 	dAlertMsg={
 				'title'	:sTitle,
@@ -25,13 +25,13 @@ def DosStart():
 
 
 def DosEnd():
-	sTitle		='¡¾%s¡¿%s'					%(GetTitle(),GetIP())
-	sSpeed		='[µ±Ç°ËÙ¶È]%.2f m/s'			%(float(GetSpeed()/1000.0))
-	sSlope		='[µ±Ç°ËÙ¶È±ä»¯ÂÊ]%i kb/s^2'	%(GetSlope())
-	sStartTime	='\n¿ªÊ¼Ê±¼ä£º%s'				%(GetStartTime())
-	sEndTime	='\n½áÊøÊ±¼ä£º%s'				%(GetEndTime())
-	sDuration	='\n³ÖĞøÊ±¼ä£º%.1f ·ÖÖÓ'		%(GetDuration())
-	sMaxtraff	='\nÁ÷Á¿·åÖµ£º%.1f M/s'		%(GetMaxTraff())
+	sTitle		='ã€%sã€‘%s'					%(GetTitle(),GetIP())
+	sSpeed		='[å½“å‰é€Ÿåº¦]%.2f m/s'			%(float(GetSpeed()/1000.0))
+	sSlope		='[å½“å‰é€Ÿåº¦å˜åŒ–ç‡]%i kb/s^2'	%(GetSlope())
+	sStartTime	='\nå¼€å§‹æ—¶é—´ï¼š%s'				%(GetStartTime())
+	sEndTime	='\nç»“æŸæ—¶é—´ï¼š%s'				%(GetEndTime())
+	sDuration	='\næŒç»­æ—¶é—´ï¼š%.1f åˆ†é’Ÿ'		%(GetDuration())
+	sMaxtraff	='\næµé‡å³°å€¼ï¼š%.1f M/s'		%(GetMaxTraff())
 	sBody=sTitle+sSpeed+sSlope+sStartTime+sEndTime+sDuration+sMaxtraff
 	dAlertMsg={
 				'title'	:sTitle,
@@ -42,24 +42,24 @@ def DosEnd():
 
 def CheckPath():
 	iTraff=ExecManagerFunc('netcark','Traff')
-	if iTraff==None:	#Á÷Á¿ÖµµÈÓÚ0ÊÇÔÊĞíµÄ
-		raise Exception('²»ÄÜ»ñµÃÍø¿¨Á÷Á¿£¡')
-	Log(gsconf.PATH_LOG_STATUS_TRAFF,'dos¼ì²é¹¦ÄÜ¿ÉÓÃ')
+	if iTraff==None:	#æµé‡å€¼ç­‰äº0æ˜¯å…è®¸çš„
+		raise Exception('ä¸èƒ½è·å¾—ç½‘å¡æµé‡ï¼')
+	Log(gsconf.PATH_LOG_STATUS_TRAFF,'dosæ£€æŸ¥åŠŸèƒ½å¯ç”¨')
 
 
 class CCheckTraff():
-	#ÖÜÆÚµÄ³¤¶Ì½»ÓÉanalydos¿ØÖÆ
+	#å‘¨æœŸçš„é•¿çŸ­äº¤ç”±analydosæ§åˆ¶
 	def __init__(self):
-		self.m_EventDict	=	{}		#°üº¬Ã¿´Î¼ì²éÁ÷Á¿·µ»ØµÄÍøÂç×´¿ö£¬¹²ÓĞÈıÖÖÇé¿ö£º¿Õ£¬dos¹¥»÷£¬¹¥»÷½áÊø
+		self.m_EventDict	=	{}		#åŒ…å«æ¯æ¬¡æ£€æŸ¥æµé‡è¿”å›çš„ç½‘ç»œçŠ¶å†µï¼Œå…±æœ‰ä¸‰ç§æƒ…å†µï¼šç©ºï¼Œdosæ”»å‡»ï¼Œæ”»å‡»ç»“æŸ
 		
 		
 	def FormatEvent(self):
 		sTitle=GetTitle()
 		if sTitle=='':
 			dEvent=Normal()
-		elif sTitle=='ÒÉËÆDos¹¥»÷':
+		elif sTitle=='ç–‘ä¼¼Dosæ”»å‡»':
 			dEvent=DosStart()
-		elif sTitle=='Òì³£Á÷Á¿½áÊø':
+		elif sTitle=='å¼‚å¸¸æµé‡ç»“æŸ':
 			dEvent=DosEnd()
 		return dEvent
 	
@@ -77,16 +77,16 @@ class CCheckTraff():
 	
 	
 	def Start(self):
-		iTraff=ExecManagerFunc('netcark','Traff')	#´ÓÉè±¸¶ÔÏóÖĞ»ñµÃ¸ÃÉè±¸µÄ×ÖµäÊı¾İ
-		ExecManagerFunc('analydos','Start',iTraff)	#½«Á÷Á¿Êı¾İ½øĞĞ·ÖÎö
-		self.m_EventDict=self.FormatEvent()			#¸ñÊ½»¯µÃµ½ÈİÒ×ÔÄ¶ÁµÄĞÅÏ¢
-		self.Record(self.m_EventDict)				#¼ÇÂ¼ĞÅÏ¢
-		self.Alert(self.m_EventDict)				#¶ÔĞèÒª±¨¾¯µÄĞÅÏ¢½øĞĞ´¦Àí
+		iTraff=ExecManagerFunc('netcark','Traff')	#ä»è®¾å¤‡å¯¹è±¡ä¸­è·å¾—è¯¥è®¾å¤‡çš„å­—å…¸æ•°æ®
+		ExecManagerFunc('analydos','Start',iTraff)	#å°†æµé‡æ•°æ®è¿›è¡Œåˆ†æ
+		self.m_EventDict=self.FormatEvent()			#æ ¼å¼åŒ–å¾—åˆ°å®¹æ˜“é˜…è¯»çš„ä¿¡æ¯
+		self.Record(self.m_EventDict)				#è®°å½•ä¿¡æ¯
+		self.Alert(self.m_EventDict)				#å¯¹éœ€è¦æŠ¥è­¦çš„ä¿¡æ¯è¿›è¡Œå¤„ç†
 		Remove_Call_Out("checktraff")
-		Call_Out(Functor(self.Start),GetInterval(),"checktraff") #ÎªÁË²»ÖØÃû£¬Ê¹ÓÃÎÄ¼şÃû×÷Îª×¢²áÃû
+		Call_Out(Functor(self.Start),GetInterval(),"checktraff") #ä¸ºäº†ä¸é‡åï¼Œä½¿ç”¨æ–‡ä»¶åä½œä¸ºæ³¨å†Œå
 	
 	
 	def Init(self):
 		CheckPath()
-		Log(gsconf.PATH_LOG_STATUS_TRAFF,'¿ªÊ¼¼ì²éÁ÷Á¿')
+		Log(gsconf.PATH_LOG_STATUS_TRAFF,'å¼€å§‹æ£€æŸ¥æµé‡')
 	

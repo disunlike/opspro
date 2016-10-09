@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 '''
 Created on 2016-5-3
-@author: admin
-ÓÃÍ¾£º
-	µ÷ÓÃ½Ó¿Ú,²»ÈÃÂß¼­´úÂëÅöµ½Êı¾İ£¬ÃâµÃ¿É±ä¶ÔÏó±»ĞŞ¸Äµ½
+@author: youzeshun
+ç”¨é€”ï¼š
+	è°ƒç”¨æ¥å£,ä¸è®©é€»è¾‘ä»£ç ç¢°åˆ°æ•°æ®ï¼Œå…å¾—å¯å˜å¯¹è±¡è¢«ä¿®æ”¹åˆ°
 '''
 from public.define import *
 
@@ -16,7 +16,7 @@ def GetInterval():
 def GetIP():
 	sIP=GetGlobalManager('ip')
 	if not sIP:
-		raise Exception('ÒâÍâµÄ´íÎó£ºÃ»ÓĞ½«ip¼ÓÈëÎªÈ«¾Ö±äÁ¿×Öµä')
+		raise Exception('æ„å¤–çš„é”™è¯¯ï¼šæ²¡æœ‰å°†ipåŠ å…¥ä¸ºå…¨å±€å˜é‡å­—å…¸')
 	return sIP
 
 
@@ -69,19 +69,4 @@ def GetDuration():
 	dSummary=GetSummaryDict()
 	return dSummary['dos']['duration']
 
-
-def GetEvent():
-	dEvent=GetManagerAttr('traff','m_EventDict')
-	return dEvent
-
-
-def GetNewLog():
-	dNewLog=GetManagerAttr('newlog','m_NewContentDict')
-	return dNewLog
-
-def ExecDmesg():
-	shellDict=GetGlobalManager('shelldict')
-	oDmesg=shellDict['dmesg']
-	dDmesg=oDmesg.Start()
-	return dDmesg
 

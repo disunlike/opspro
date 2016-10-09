@@ -4,22 +4,22 @@ Created on 2016-1-13
 
 @author: admin
 
-Ìá¹©¶ÔÊı¾İ»ù´¡ÌØÕ÷µÄ·ÖÎö·½·¨£º
-1.ËÙÂÊ
-2.±ä»¯ÂÊ
+æä¾›å¯¹æ•°æ®åŸºç¡€ç‰¹å¾çš„åˆ†ææ–¹æ³•ï¼š
+1.é€Ÿç‡
+2.å˜åŒ–ç‡
 '''
 from public.define import *
 
 class CAnaly(object):
 	
 	def __init__(self):
-		self.m_iDataNext	=0				#ÏÂÒ»¸öÊ±¿ÌµÄÊı¾İÁ¿
-		self.m_iDataPre		=0				#ÉÏÒ»¸öÊ±¿ÌµÄÊı¾İÁ¿
-		self.m_iSpeedNext	=0				#ÏÂÒ»¸öÊ±¿ÌµÄËÙ¶È
-		self.m_iSpeedPre	=0				#ÉÏÒ»¸öÊ±¿ÌµÄËÙ¶È
-		self.m_iInterval	=0				#·ÖÎöµÄ¼ä¸ô
-		self.m_iSlope		=0				#ËÙ¶ÈµÄ±ä»¯ÂÊ
-		self.m_iUnstable	=2				#Å×Æú¼ÆÊı×î¿ªÊ¼µÄÁ½¸öÖµ
+		self.m_iDataNext	=0				#ä¸‹ä¸€ä¸ªæ—¶åˆ»çš„æ•°æ®é‡
+		self.m_iDataPre		=0				#ä¸Šä¸€ä¸ªæ—¶åˆ»çš„æ•°æ®é‡
+		self.m_iSpeedNext	=0				#ä¸‹ä¸€ä¸ªæ—¶åˆ»çš„é€Ÿåº¦
+		self.m_iSpeedPre	=0				#ä¸Šä¸€ä¸ªæ—¶åˆ»çš„é€Ÿåº¦
+		self.m_iInterval	=0				#åˆ†æçš„é—´éš”
+		self.m_iSlope		=0				#é€Ÿåº¦çš„å˜åŒ–ç‡
+		self.m_iUnstable	=2				#æŠ›å¼ƒè®¡æ•°æœ€å¼€å§‹çš„ä¸¤ä¸ªå€¼
 	
 	
 	def SetInterval(self,iInterval):
@@ -28,10 +28,10 @@ class CAnaly(object):
 	
 	def IsInit(self,iData):
 		if not isinstance(iData, int):
-			print 'ÔËÎ¬¼à¿Ø£º%s´«ÈëµÄÊı¾İÓ¦¸ÃÊÇÕûĞÍ,¶ø·Ç'%(__file__,type(iData))
+			print 'è¿ç»´ç›‘æ§ï¼š%sä¼ å…¥çš„æ•°æ®åº”è¯¥æ˜¯æ•´å‹,è€Œé'%(__file__,type(iData))
 			return 0
 		elif self.m_iInterval<=0:
-			print 'ÔËÎ¬¼à¿Ø£º:%sÊ±¼ä¼ä¸ôInterval±ØĞë´óÓÚ0'%(__file__)
+			print 'è¿ç»´ç›‘æ§ï¼š:%sæ—¶é—´é—´éš”Intervalå¿…é¡»å¤§äº0'%(__file__)
 			return 0
 		return 1
 	
@@ -41,14 +41,14 @@ class CAnaly(object):
 			return
 
 		self.UpdateData(iData)
-		self.GetSpeed()					#»ñµÃµ±Ç°ËÙ¶È
-		self.GetSlope()					#»ñµÃµ±Ç°ËÙ¶È±ä»¯ÂÊ
+		self.GetSpeed()					#è·å¾—å½“å‰é€Ÿåº¦
+		self.GetSlope()					#è·å¾—å½“å‰é€Ÿåº¦å˜åŒ–ç‡
 
-		if self.m_iUnstable>0:			#ÉáÆúÇ°Á½¸öÖµ£¬ÓÉÓÚ¸Õ¸ÕÆô¶¯£¬ÓÃµ½ÁËÄ¬ÈÏÖµ0
+		if self.m_iUnstable>0:			#èˆå¼ƒå‰ä¸¤ä¸ªå€¼ï¼Œç”±äºåˆšåˆšå¯åŠ¨ï¼Œç”¨åˆ°äº†é»˜è®¤å€¼0
 			self.m_iUnstable-=1
 			return
 		
-		self.OnCommand()				#ÆäËû´¦Àí
+		self.OnCommand()				#å…¶ä»–å¤„ç†
 	
 	
 	def UpdateData(self,iData):
@@ -56,12 +56,12 @@ class CAnaly(object):
 		self.m_iDataNext=iData
 		
 		
-	def GetSpeed(self):	#¼ÆËãµ±Ç°µÄËÙÂÊ
+	def GetSpeed(self):	#è®¡ç®—å½“å‰çš„é€Ÿç‡
 		self.m_iSpeedPre=self.m_iSpeedNext
 		self.m_iSpeedNext=(self.m_iDataNext-self.m_iDataPre)/self.m_iInterval
 	
 	
-	def GetSlope(self):	#¼ÆËãµ±Ç°µÄ±ä»¯ÂÊ
+	def GetSlope(self):	#è®¡ç®—å½“å‰çš„å˜åŒ–ç‡
 		self.m_iSlope=(self.m_iSpeedNext-self.m_iSpeedPre)/self.m_iInterval
 	
 	

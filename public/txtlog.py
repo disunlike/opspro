@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 '''
-¹æÔò²Î¿¼ÓÎÏ·ÈÕÖ¾£¬²»Í¬ÏîÄ¿µÄÈÕÖ¾·Ö±ğ×ÔĞĞ´´½¨²»Í¬µÄÄ¿Â¼¹ÜÀí
+è§„åˆ™å‚è€ƒæ¸¸æˆæ—¥å¿—ï¼Œä¸åŒé¡¹ç›®çš„æ—¥å¿—åˆ†åˆ«è‡ªè¡Œåˆ›å»ºä¸åŒçš„ç›®å½•ç®¡ç†
 
-Ê¹ÓÃËµÃ÷£º
+ä½¿ç”¨è¯´æ˜ï¼š
 'Write('c/d','post')'
 '''
 from public.define import *
@@ -11,7 +11,7 @@ import os
 
 class CLog():
 	def __init__(self,sRootDir='log',sPostfix='.txt'):
-		self.m_RootDir=sRootDir #ÈÕ¼ÇÎÄ¼şµÄ¸ùÄ¿Â¼
+		self.m_RootDir=sRootDir #æ—¥è®°æ–‡ä»¶çš„æ ¹ç›®å½•
 		self.m_Postfix=sPostfix
 	
 	
@@ -49,19 +49,19 @@ class CLog():
 	
 	def CheckNameFormat(self,sName):
 		if not sName.find(self.m_Postfix):
-			raise RuntimeError('²»ĞèÒªÊ¹ÓÃÄ¬ÈÏºó×º')
+			raise RuntimeError('ä¸éœ€è¦ä½¿ç”¨é»˜è®¤åç¼€')
 	
 	
 	def CheckPathFormat(self,sFilePath):
 		ResultList=sFilePath.split('/')
 		if len(ResultList)<2:
-			raise RuntimeError('ÈÕÖ¾µÄ´æ´¢ÖÁÉÙÊÇÁ½¼«Ä¿Â¼')
+			raise RuntimeError('æ—¥å¿—çš„å­˜å‚¨è‡³å°‘æ˜¯ä¸¤æç›®å½•')
 	
 	
 	def CreateFolder(self,sDirPath):
 		path.CreateDir(sDirPath)
 
-#×ö³ÉGlobalManager¾ÍÊÇÎªÁË±ÜÃâimportÕâ¸öÄ£¿é --³ÌĞò-»ù´¡ÑĞ·¢-»Æ³Ï¶÷(2978) 2016-3-15 09:44:45
+#åšæˆGlobalManagerå°±æ˜¯ä¸ºäº†é¿å…importè¿™ä¸ªæ¨¡å— --ç¨‹åº-åŸºç¡€ç ”å‘-é»„è¯šæ©(2978) 2016-3-15 09:44:45
 #def Write(sFilePath,sText):
 #	if not sText:
 #		return

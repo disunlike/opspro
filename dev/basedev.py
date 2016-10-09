@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
-# ·şÎñÆ÷ĞÅÏ¢»ùÀà 
-# ÓÈÔóË³
-# 2016Äê1ÔÂ12ÈÕ
+# æœåŠ¡å™¨ä¿¡æ¯åŸºç±» 
+# å°¤æ³½é¡º
+# 2016å¹´1æœˆ12æ—¥
 '''
-ËùÓĞµÄ²É¼¯¶¼±ØĞë¼Ì³Ğ¸ÃÀà
+æ‰€æœ‰çš„é‡‡é›†éƒ½å¿…é¡»ç»§æ‰¿è¯¥ç±»
 '''
 
 import os
@@ -11,9 +11,9 @@ import os
 class CBaseDev(object):
 	
 	def __init__(self):
-		self.m_Name=''#Õâ¸öÉè±¸µÄÃû×Ö
-		self.m_ShellCmd=''#²É¼¯¸ÃÉè±¸µÄÃüÁî
-		self.m_FormatDict=''#·µ»ØµÄÊı¾İ¸ñÊ½
+		self.m_Name=''#è¿™ä¸ªè®¾å¤‡çš„åå­—
+		self.m_ShellCmd=''#é‡‡é›†è¯¥è®¾å¤‡çš„å‘½ä»¤
+		self.m_FormatDict=''#è¿”å›çš„æ•°æ®æ ¼å¼
 	
 	
 	def __call__(self):
@@ -44,6 +44,6 @@ class CBaseDev(object):
 	def FormatResult(self,sResult):
 		if not sResult:
 			return
-		sResult=sResult.rstrip()	#shellÃüÁîµÄÖ´ĞĞ½á¹û½«Êä³öµ½ÖÕ¶Ë£¬Òò´ËÄ¬ÈÏ¶àÒ»¸ö»»ĞĞÀ´¸ô¿ª'ÓÃ»§Ãû@Ö÷»úÃû'
+		sResult=sResult.rstrip()	#shellå‘½ä»¤çš„æ‰§è¡Œç»“æœå°†è¾“å‡ºåˆ°ç»ˆç«¯ï¼Œå› æ­¤é»˜è®¤å¤šä¸€ä¸ªæ¢è¡Œæ¥éš”å¼€'ç”¨æˆ·å@ä¸»æœºå'
 		return sResult
 	

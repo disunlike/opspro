@@ -1,52 +1,45 @@
 # -*- coding:utf-8 -*-
-#¡¡ÓÈÔóË³¡¡(IM:8766)
+#ã€€å°¤æ³½é¡ºã€€(IM:8766)
 '''
-ÓÃÍ¾£º
+ç”¨é€”ï¼š
 	dos.py
-		¼ì²éÊÇ·ñ·¢Éúdos¹¥»÷
-	checkkernlog.py
-		¼ì²éÏµÍ³ÈÕÖ¾ÖĞ¼¶±ğ3ÒÔÉÏµÄ´íÎó
-	kernelbuffer.py
-		¼ì²éÄÚºË»º´æ´íÎó3¼¶±ğÒÔÉÏµÄ´íÎó
+		æ£€æŸ¥æ˜¯å¦å‘ç”Ÿdosæ”»å‡»
 
-Ä£¿éËµÃ÷£º
-	analysis£ºÌá¹©Êı¾İ·ÖÎö¡£Ä¿Ç°·ÖÎöÊı¾İµÄ±ä»¯ÌØÕ÷ÊÇ·ñ·ûºÏdosµÄÌØĞÔ
-	dev:Ìá¹©Éè±¸µÄ¹ÜÀí£¬±ÈÈç»ñµÃ£É£ÏÊ¹ÓÃ£¬ÏµÍ³¸ºÔØ¡£Ä¿Ç°ÓÃÓÚ»ñµÃÍø¿¨Á÷Á¿
-	log:Ö»ÊÇÒ»¸öÎÄ¼ş¼Ğ£¬ÓÃÓÚ±£¹ÜÆäËû³ÌĞòÉú³ÉµÄÈÕÖ¾
-	public:Í¨ÓÃ´úÂë¡£±ÈÈçĞ´ÈÕÖ¾£¬»ğĞÇ±¨¾¯£¬Â·¾¶½âÎö
-	shellcmd:·â×°shellÃüÁî
+æ¨¡å—è¯´æ˜ï¼š
+	analysisï¼šæä¾›æ•°æ®åˆ†æã€‚ç›®å‰åˆ†ææ•°æ®çš„å˜åŒ–ç‰¹å¾æ˜¯å¦ç¬¦åˆdosçš„ç‰¹æ€§
+	dev:æä¾›è®¾å¤‡çš„ç®¡ç†ï¼Œæ¯”å¦‚è·å¾—ï¼©ï¼¯ä½¿ç”¨ï¼Œç³»ç»Ÿè´Ÿè½½ã€‚ç›®å‰ç”¨äºè·å¾—ç½‘å¡æµé‡
+	log:åªæ˜¯ä¸€ä¸ªæ–‡ä»¶å¤¹ï¼Œç”¨äºä¿ç®¡å…¶ä»–ç¨‹åºç”Ÿæˆçš„æ—¥å¿—
+	public:é€šç”¨ä»£ç ã€‚æ¯”å¦‚å†™æ—¥å¿—ï¼Œç«æ˜ŸæŠ¥è­¦ï¼Œè·¯å¾„è§£æ
+	shellcmd:å°è£…shellå‘½ä»¤
 	
-	¸÷Ä£¿éµÄÔËĞĞ×´¿öĞ´£ºtxtlog.Write('status/½Å±¾Ãû³Æ','¿ªÊ¼¼ì²éÁ÷Á¿')
-	¸÷Ä£¿é²úÉúµÄÈÕÖ¾Ğ´£ºtxtlog.Write('°üÃû³Æ/½Å±¾Ãû³Æ','¿ªÊ¼¼ì²éÁ÷Á¿')
-	¸÷Ä£¿éµÄ²úÉúµÄÊı¾İĞ´£ºtxtlog.Write('data/½Å±¾Ãû³Æ','¿ªÊ¼¼ì²éÁ÷Á¿')
+	å„æ¨¡å—çš„è¿è¡ŒçŠ¶å†µå†™ï¼štxtlog.Write('status/è„šæœ¬åç§°','å¼€å§‹æ£€æŸ¥æµé‡')
+	å„æ¨¡å—äº§ç”Ÿçš„æ—¥å¿—å†™ï¼štxtlog.Write('åŒ…åç§°/è„šæœ¬åç§°','å¼€å§‹æ£€æŸ¥æµé‡')
+	å„æ¨¡å—çš„äº§ç”Ÿçš„æ•°æ®å†™ï¼štxtlog.Write('data/è„šæœ¬åç§°','å¼€å§‹æ£€æŸ¥æµé‡')
 
-×¢Òâ£º
-	ÓÎÏ··şÉÏ²¿Êğ´úÂëµÄ»µ´¦£º
-		1.¡¾ÖØµã¡¿¸øÓÎÏ··ş´øÀ´¶îÍâµÄ¸ºÔØ
-		2ÖÜÎå¸üĞÂ´úÂë
-		3.ÒªÄÃÈÕÖ¾·ÖÎöµÃÕÒÈË
+æ³¨æ„ï¼š
+	æ¸¸æˆæœä¸Šéƒ¨ç½²ä»£ç çš„åå¤„ï¼š
+		1.ã€é‡ç‚¹ã€‘ç»™æ¸¸æˆæœå¸¦æ¥é¢å¤–çš„è´Ÿè½½
+		2å‘¨äº”æ›´æ–°ä»£ç 
+		3.è¦æ‹¿æ—¥å¿—åˆ†æå¾—æ‰¾äºº
 
-	²¿ÊğÔÚzabbix½áµãµÄ»µ´¦
-	1.¡¾ÄÑµã¡¿½»»»»úºÍÖ÷»úµÄ¶ÔÓ¦¹ØÏµ²»ºÃÈ·ÈÏ
-	2.¼à¿Ø½áµãºÍÓÎÏ··ş¸ºÔØÌá¸ß
+	éƒ¨ç½²åœ¨zabbixç»“ç‚¹çš„åå¤„
+	1.ã€éš¾ç‚¹ã€‘äº¤æ¢æœºå’Œä¸»æœºçš„å¯¹åº”å…³ç³»ä¸å¥½ç¡®è®¤
+	2.ç›‘æ§ç»“ç‚¹å’Œæ¸¸æˆæœè´Ÿè½½æé«˜
 '''
-
+import os
 import analysis
 import gsalert
 import analydos
 import checktraff
 import gsconf
-import checklog
-from checktext import newlog
 from public.define import *
 from public import timerctrl
 from public import txtlog
 from dev import netcark
 from dev import ip
-import shellcmd
 
 def GetIP():
-	sIP=ExecShell(gsconf.PATH_SCRIPT_GET_IP)	#ÓÅÏÈÊ¹ÓÃÓÎÏ··şµÄ·½Ê½»ñµÃip
+	sIP=os.popen(gsconf.PATH_SCRIPT_GET_IP).read()	#ä¼˜å…ˆä½¿ç”¨æ¸¸æˆæœçš„æ–¹å¼è·å¾—ip
 	if not sIP:
 		oIP=ip.CDev()
 		sIP=oIP.Start()
@@ -55,41 +48,29 @@ def GetIP():
 
 def Init(sLogPath,sRootPath):
 	if not sLogPath:
-		raise Exception('Ã»ÓĞÕÒµ½ÈÕÖ¾Â·¾¶£¬Çë¼ì²épromanager.sh')
+		raise Exception('æ²¡æœ‰æ‰¾åˆ°æ—¥å¿—è·¯å¾„ï¼Œè¯·æ£€æŸ¥promanager.sh')
 	SetGlobalManager('logpath',sLogPath)
-	SetGlobalManager('rootpath',sRootPath)		#½Å±¾µÄ¸ùÂ·¾¶£¬ÓÃÓÚÑ°ÕÒ×ÊÔ´
+	SetGlobalManager('rootpath',sRootPath)		#è„šæœ¬çš„æ ¹è·¯å¾„ï¼Œç”¨äºå¯»æ‰¾èµ„æº
 	SetGlobalManager("timer",timerctrl.CTimerManager())
-	SetGlobalManager("shelldict",shellcmd.Init())
 	SetGlobalManager('ip',GetIP())
 	'''
-		ÓÃÍ¾£º¸ù¾İÍø¿¨Á÷Á¿¼ì²édos
+		ç”¨é€”ï¼šæ ¹æ®ç½‘å¡æµé‡æ£€æŸ¥dos
 	'''
 	oAnalyDos=analydos.CAnalyDos()
 	oAnalyDos.SetInterval(gsconf.PERIOD_NORMAL)
-	SetGlobalManager("analydos",oAnalyDos)					#ÎªÁËÄÜ¹»Ê¹ÓÃ²âÊÔ´úÂë¶ÔÕâ¸öÀà½øĞĞ²âÊÔ£¬½«Æä´ò°üµ½ÕâÀï
+	SetGlobalManager("analydos",oAnalyDos)					#ä¸ºäº†èƒ½å¤Ÿä½¿ç”¨æµ‹è¯•ä»£ç å¯¹è¿™ä¸ªç±»è¿›è¡Œæµ‹è¯•ï¼Œå°†å…¶æ‰“åŒ…åˆ°è¿™é‡Œ
 	SetGlobalManager("traff",checktraff.CCheckTraff())
 	'''
-		ÓÃÍ¾£º»ñµÃÍø¿¨½ÓÊÕµ½µÄÊı¾İ
-		²âÊÔÖ¸Áî£ºpython opspro/debuggs.py --mod=netcark --func=Traff
+		ç”¨é€”ï¼šè·å¾—ç½‘å¡æ¥æ”¶åˆ°çš„æ•°æ®
+		æµ‹è¯•æŒ‡ä»¤ï¼špython opspro/debuggs.py --mod=netcark --func=Traff
 	'''
-	SetGlobalManager("netcark",netcark.CDev()) 			#dev.DevDictÕâÖÖ·½Ê½»áÈÃÈ«¾Ö±äÁ¿ºÍÈ«¾Ö±äÁ¿¹ÜÀí×ÖµäÍ¬Ê±±£´æÏàÍ¬µÄÄÚÈİ¡£
+	SetGlobalManager("netcark",netcark.CDev()) 			#dev.DevDictè¿™ç§æ–¹å¼ä¼šè®©å…¨å±€å˜é‡å’Œå…¨å±€å˜é‡ç®¡ç†å­—å…¸åŒæ—¶ä¿å­˜ç›¸åŒçš„å†…å®¹ã€‚
 	SetGlobalManager("txtlog",txtlog.CLog(sLogPath))
 	#SetGlobalManager("imalert",alert.CIMAlert())
 	SetGlobalManager("alert",gsalert.CAlertManager())
-	SetGlobalManager('newlog',newlog.CCheck(gsconf.CHECKLOG_LOG_DICT))
-	SetGlobalManager("checklog",checklog.CCheckLog())
 	
 	
 def Start():
 	ExecManagerFunc("traff",'Init')
 	ExecManagerFunc("traff",'Start')
-	
-	#¿ª»ú×Ô¼ìĞÅÏ¢¼ì²é
-	import kernbuff
-	kernbuff.Init()
-	kernbuff.Start()
-	
-	#¼ì²éÈÕÖ¾ÖĞ¼ÇÂ¼µÄÑÏÖØ´íÎó£¬»ğĞÇ·¢ËÍ
-	ExecManagerFunc("checklog",'Init')
-	ExecManagerFunc("checklog",'Start')
 	

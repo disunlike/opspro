@@ -2,7 +2,7 @@
 import basedev
 
 '''
-»ñµÃeth0µÄip£¬#×Ó½Ó¿ÚµÄip²»Æ¥Åä¡£ÒªÆ¥Åä'grep eth0$' ¸ÄÎª 'grep eth0'
+è·å¾—eth0çš„ipï¼Œ#å­æ¥å£çš„ipä¸åŒ¹é…ã€‚è¦åŒ¹é…'grep eth0$' æ”¹ä¸º 'grep eth0'
 '''
 
 class CDev(basedev.CBaseDev):
@@ -10,4 +10,4 @@ class CDev(basedev.CBaseDev):
 	def __init__(self):
 		self.m_Name='eth0 ip'
 		self.m_ShellCmd="ip a|grep eth0$|grep brd|awk '{print $2}'|awk -F '/' '{print $1}'"
-		#¾¡Á¿²»ÒªÊ¹ÓÃifconfig£¬±ØĞëÊ¹ÓÃÔòÓÃ/sbin/iconfig
+		#å°½é‡ä¸è¦ä½¿ç”¨ifconfigï¼Œå¿…é¡»ä½¿ç”¨åˆ™ç”¨/sbin/iconfig

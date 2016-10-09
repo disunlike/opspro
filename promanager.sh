@@ -1,9 +1,9 @@
 #/bin/dash
-#auth:ÓÈÔóË³
-#´´½¨£º2016-2-4
-#ÓÃÍ¾£º1.ÅäÖÃpythonµÄÔËĞĞ»·¾³£¬ÈçÈÕÖ¾µÄ±£´æÎ»ÖÃµÈ 2.¹ÜÀípython½Å±¾µÄÔËĞĞ£¬Æô¶¯£¬²¢ÄÜ²é¿´×´Ì¬
+#auth:å°¤æ³½é¡º
+#åˆ›å»ºï¼š2016-2-4
+#ç”¨é€”ï¼š1.é…ç½®pythonçš„è¿è¡Œç¯å¢ƒï¼Œå¦‚æ—¥å¿—çš„ä¿å­˜ä½ç½®ç­‰ 2.ç®¡ç†pythonè„šæœ¬çš„è¿è¡Œï¼Œå¯åŠ¨ï¼Œå¹¶èƒ½æŸ¥çœ‹çŠ¶æ€
 
-#¼ì²é³ÌĞòÊÇ·ñ´æÔÚ
+#æ£€æŸ¥ç¨‹åºæ˜¯å¦å­˜åœ¨
 IsFile(){
 	file $ScriptPath &>/dev/null
 	if [ $? = 1 ];then
@@ -12,7 +12,7 @@ IsFile(){
 	return 1
 }
 
-#¼ì²é³ÌĞòÊÇ·ñÒÑ¾­ÔÚÔËĞĞ
+#æ£€æŸ¥ç¨‹åºæ˜¯å¦å·²ç»åœ¨è¿è¡Œ
 IsRun()
 {
 	Result=`ps -ef|grep $ScriptPath|grep -v ' grep '` 
@@ -22,16 +22,16 @@ IsRun()
 	return 0
 }
 
-#µÃµ½½Å±¾ËùÔÚµÄÂ·¾¶
-#$0±íÊ¾Ö´ĞĞÄ¿Â¼µ½½Å±¾µÄÏà¶ÔÂ·¾¶£¬dirname »ñµÃÂ·¾¶Ãû¡£¼È£ºcdµ½½Å±¾µÄ¾ø¶ÔÂ·¾¶£¬È»ºópwdµÃµ½Ö´ĞĞ¸ÃÃüÁîµÄ¾ø¶ÔÂ·¾¶
+#å¾—åˆ°è„šæœ¬æ‰€åœ¨çš„è·¯å¾„
+#$0è¡¨ç¤ºæ‰§è¡Œç›®å½•åˆ°è„šæœ¬çš„ç›¸å¯¹è·¯å¾„ï¼Œdirname è·å¾—è·¯å¾„åã€‚æ—¢ï¼šcdåˆ°è„šæœ¬çš„ç»å¯¹è·¯å¾„ï¼Œç„¶åpwdå¾—åˆ°æ‰§è¡Œè¯¥å‘½ä»¤çš„ç»å¯¹è·¯å¾„
 SetScriptPath(){
 	if [ -z $BasePath ];then
-		echo '´íÎó£ºÃ»ÓĞÉèÖÃ»ù´¡Â·¾¶£¨SetScriptPath£©'
+		echo 'é”™è¯¯ï¼šæ²¡æœ‰è®¾ç½®åŸºç¡€è·¯å¾„ï¼ˆSetScriptPathï¼‰'
 		exit
 	fi
 
 	SoftLink=`ls -l $BasePath|grep ' -> '`
-	#Èç¹ûµ±Ç°Ä¿Â¼ÊÇÈíÁ´½ÓÔòµÃµ½ÕæÊµÁ´½Ó
+	#å¦‚æœå½“å‰ç›®å½•æ˜¯è½¯é“¾æ¥åˆ™å¾—åˆ°çœŸå®é“¾æ¥
 	if [ -z "$SoftLink" ];then
 		ScriptPath=$BasePath/${ScriptName}
 	else
@@ -40,7 +40,7 @@ SetScriptPath(){
 	fi
 }
 
-#»ù´¡Â·¾¶Îª½Å±¾ËùÔÚµÄÂ·¾¶
+#åŸºç¡€è·¯å¾„ä¸ºè„šæœ¬æ‰€åœ¨çš„è·¯å¾„
 SetBasePath(){
 	BasePath=$(cd `dirname $0`;pwd)
 }
@@ -52,12 +52,12 @@ InitModeGS(){
 }
 
 InitError(){
-	echo '´íÎó£ºÃ»ÓĞÆ¥Åäµ½Ä£Ê½,¿ÉÑ¡Ä£Ê½:als,gs,dts,cls,mnts'
+	echo 'é”™è¯¯ï¼šæ²¡æœ‰åŒ¹é…åˆ°æ¨¡å¼,å¯é€‰æ¨¡å¼:als,gs,dts,cls,mnts'
 	Tip
 	exit
 }
 
-#Ôö¼ÓÒ»¸öÄ£Ê½µÄ¼ì²é
+#å¢åŠ ä¸€ä¸ªæ¨¡å¼çš„æ£€æŸ¥
 InitMode(){
 	Mode=$2
 	if [ "$Mode" = 'gs' ];then
@@ -67,34 +67,34 @@ InitMode(){
 	fi
 }
 
-#³ÌĞò-lanwood(6349) 2016-2-4
+#ç¨‹åº-lanwood(6349) 2016-2-4
 SetGSLogPath(){
-	#ÎÄ¼ş´æÔÚÇÒ¿É¶Á
+	#æ–‡ä»¶å­˜åœ¨ä¸”å¯è¯»
 	if [ -r /etc/gs.conf ];then
-		#ÔÚµ±Ç°shellÏÂÖ´ĞĞ¸ÃÅäÖÃ£¨Ö»ĞèÒª¶ÁÈ¨ÏŞ£¬²»ĞèÒªÖ´ĞĞÈ¨ÏŞ£©
+		#åœ¨å½“å‰shellä¸‹æ‰§è¡Œè¯¥é…ç½®ï¼ˆåªéœ€è¦è¯»æƒé™ï¼Œä¸éœ€è¦æ‰§è¡Œæƒé™ï¼‰
 		. /etc/gs.conf
 		LogPath=/home/dy1/gs${SERVERNUM}/log/srvmgrlog
-		#´´½¨Â·¾¶±¾À´²»¸ÃĞ´ÕâµÄ£¬¿¼ÂÇµ½shell½Å±¾Ì«ÈİÒ×ÂÒÁË¡£»¹ÊÇÌù×ÅĞ´°É
+		#åˆ›å»ºè·¯å¾„æœ¬æ¥ä¸è¯¥å†™è¿™çš„ï¼Œè€ƒè™‘åˆ°shellè„šæœ¬å¤ªå®¹æ˜“ä¹±äº†ã€‚è¿˜æ˜¯è´´ç€å†™å§
 	else
-		echo '´íÎó£ºgameserverÏîÄ¿µÄÅäÖÃÎÄ¼ş²»´æÔÚ»òÕß²»¾ßÓĞ¶ÁÈ¨ÏŞ'
+		echo 'é”™è¯¯ï¼šgameserveré¡¹ç›®çš„é…ç½®æ–‡ä»¶ä¸å­˜åœ¨æˆ–è€…ä¸å…·æœ‰è¯»æƒé™'
 		exit
 	fi
 }
 
-#°´ÕÕ³ÌĞòµÄÂ·¾¶À´ÖÕÖ¹³ÌĞò£¬$1ÊÇ³ÌĞòµÄÆô¶¯½Å±¾Î»ÖÃ
+#æŒ‰ç…§ç¨‹åºçš„è·¯å¾„æ¥ç»ˆæ­¢ç¨‹åºï¼Œ$1æ˜¯ç¨‹åºçš„å¯åŠ¨è„šæœ¬ä½ç½®
 killPro(){
 	ps -ef|grep $1|grep -v ' grep '|awk '{print $2}'|xargs kill
 	if [ $? = 0 ];then
-		echo '³É¹¦ÖÕÖ¹'$ScriptName
+		echo 'æˆåŠŸç»ˆæ­¢'$ScriptName
 	else
-		echo 'ÖÕÖ¹³ÌĞòÊ§°Ü'$ScriptName
+		echo 'ç»ˆæ­¢ç¨‹åºå¤±è´¥'$ScriptName
 	fi
 }
 
-#Çå¿ÕÈÕÖ¾£¬ÒâÍâÇå¿ÕÏÂ$LogPath»áÊÇ¿Õ±äÁ¿£¬Òò´ËĞ´ÏêÏ¸
+#æ¸…ç©ºæ—¥å¿—ï¼Œæ„å¤–æ¸…ç©ºä¸‹$LogPathä¼šæ˜¯ç©ºå˜é‡ï¼Œå› æ­¤å†™è¯¦ç»†
 DelLog(){
 	if [ -z $LogPath ];then
-		echo '´íÎó£ºÃ»ÓĞÉèÖÃLogPath'
+		echo 'é”™è¯¯ï¼šæ²¡æœ‰è®¾ç½®LogPath'
 		exit
 	else
 		rm -rf $LogPath/status/*.txt
@@ -104,10 +104,10 @@ DelLog(){
 CheckStart(){
 	IsRun
 	if [ $? = 0 ];then
-		echo 'Æô¶¯'$ScriptName'Ê§°Ü'
+		echo 'å¯åŠ¨'$ScriptName'å¤±è´¥'
 		return 1
 	else
-		echo 'Æô¶¯'$ScriptName'³É¹¦'
+		echo 'å¯åŠ¨'$ScriptName'æˆåŠŸ'
 		return 0
 	fi
 }
@@ -117,7 +117,7 @@ WaitStartup(){
 }
 
 Start(){
-	#IsFile ¼ì²éÎÄ¼şÊÇ·ñ´æÔÚ
+	#IsFile æ£€æŸ¥æ–‡ä»¶æ˜¯å¦å­˜åœ¨
 	IsRun
 	if [ $? != 0 ];then
 		exit
@@ -125,13 +125,13 @@ Start(){
 	
 	DelLog
 	if [ -z "$ExecUser" ] || [ `whoami` = ${ExecUser} ];then
-		#ÒÔÖ´ĞĞµ±Ç°µÄshell½Å±¾µÄÓÃ»§Éí·İÖ´ĞĞ
+		#ä»¥æ‰§è¡Œå½“å‰çš„shellè„šæœ¬çš„ç”¨æˆ·èº«ä»½æ‰§è¡Œ
 		mkdir -p $LogPath && $(python $ScriptPath --logpath=$LogPath --rootpath=$BasePath &>/dev/null) &
 	else
-		#ÒÔÏîÄ¿Ö¸¶¨µÄÉí·İÖ´ĞĞ
+		#ä»¥é¡¹ç›®æŒ‡å®šçš„èº«ä»½æ‰§è¡Œ
 		su ${ExecUser} -c -l "mkdir -p $LogPath && $(python $ScriptPath --logpath=$LogPath --rootpath=$BasePath &>/dev/null) &"
 	fi
-	#³ÁË¯Ò»Ãë£¬µÈ´ı³ÌĞòÆô¶¯
+	#æ²‰ç¡ä¸€ç§’ï¼Œç­‰å¾…ç¨‹åºå¯åŠ¨
 	WaitStartup
 	CheckStart
 }
@@ -139,7 +139,7 @@ Start(){
 Stop(){
 	IsRun
 	if [ $? = 0 ];then
-		echo '³ÌĞò'$ScriptName'Ã»ÓĞÔÚÔËĞĞ'
+		echo 'ç¨‹åº'$ScriptName'æ²¡æœ‰åœ¨è¿è¡Œ'
 	else
 		killPro $ScriptPath
 	fi
@@ -148,32 +148,32 @@ Stop(){
 Status(){
 	IsRun
 	if [ $? = 0 ];then
-		echo '³ÌĞò'$ScriptName'Ã»ÓĞÔÚÔËĞĞ'
+		echo 'ç¨‹åº'$ScriptName'æ²¡æœ‰åœ¨è¿è¡Œ'
 	else
-		echo '#ÈÕÖ¾Â·¾¶£º'$LogPath
+		echo '#æ—¥å¿—è·¯å¾„ï¼š'$LogPath
 		ls $LogPath/status/*|tr '' '\n'|xargs cat
 	fi
 }
 
 Tip(){
-	echo "Óï·¨£ºsh opspro.sh ip [gs|als|cls|mnts|dts] [start|stop|restart|status|setup]
-	ÀıÈç£º
-	Step1.ÅäÖÃ»·¾³ sh opspro.sh ip gs setup
-	Step2.ÔËĞĞ     sh opspro.sh ip gs start
-	ÆäËü£º
-	¼ì²éÔËĞĞ×´Ì¬   sh opspro.sh ip gs status
-	Í£Ö¹ÔËĞĞ       sh opspro.sh ip gs stop"
+	echo "è¯­æ³•ï¼šsh opspro.sh ip [gs|als|cls|mnts|dts] [start|stop|restart|status|setup]
+	ä¾‹å¦‚ï¼š
+	Step1.é…ç½®ç¯å¢ƒ sh opspro.sh ip gs setup
+	Step2.è¿è¡Œ     sh opspro.sh ip gs start
+	å…¶å®ƒï¼š
+	æ£€æŸ¥è¿è¡ŒçŠ¶æ€   sh opspro.sh ip gs status
+	åœæ­¢è¿è¡Œ       sh opspro.sh ip gs stop"
 }
 
 Init(){
-	Opt=$1			#µÚÒ»¸ö²ÎÊıÊÇ²Ù×÷ÀàĞÍ
-	Pro=$2			#µÚ¶ş¸ö²ÎÊıÊÇÏîÄ¿Ãû³Æ
+	Opt=$1			#ç¬¬ä¸€ä¸ªå‚æ•°æ˜¯æ“ä½œç±»å‹
+	Pro=$2			#ç¬¬äºŒä¸ªå‚æ•°æ˜¯é¡¹ç›®åç§°
 	SetBasePath
-	InitMode $@		#¸ù¾İ´«²ÎÉèÖÃÄ£Ê½
-	SetScriptPath	#×éºÏpython½Å±¾ÃûºÍÂ·¾¶Ãû»ñµÃ½Å±¾Â·¾¶
+	InitMode $@		#æ ¹æ®ä¼ å‚è®¾ç½®æ¨¡å¼
+	SetScriptPath	#ç»„åˆpythonè„šæœ¬åå’Œè·¯å¾„åè·å¾—è„šæœ¬è·¯å¾„
 }
 
-#½«Õâ¸ö½Å±¾¸ÄÎª´«ÈëÊ½£¬Õâ¸ö½Å±¾½«Í¨ÓÃ
+#å°†è¿™ä¸ªè„šæœ¬æ”¹ä¸ºä¼ å…¥å¼ï¼Œè¿™ä¸ªè„šæœ¬å°†é€šç”¨
 
 main(){
 	case $1 in
@@ -191,7 +191,7 @@ main(){
 			Status
 		;;
 		*)
-			echo 'Ã»ÓĞÕâ¸ö¶¯×÷£¬start|restart|stop|status'
+			echo 'æ²¡æœ‰è¿™ä¸ªåŠ¨ä½œï¼Œstart|restart|stop|status'
 			Tip
 			exit
 		;;

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-	¸÷ÏîÄ¿³£ÓÃµÄ·½·¨
+	å„é¡¹ç›®å¸¸ç”¨çš„æ–¹æ³•
 '''
 
 import time
@@ -29,40 +29,40 @@ def GetManagerAttr(sMode,sAttr):
 		return sAttr
 	
 	
-#ÒòÎªÊ¹ÓÃÕâ¸ö·½·¨Ò»¶¨ĞèÒªGetGlobalManager·½·¨£¬ÒªÓĞimport¡¡public.defineÏà¹Ø²Ù×÷£¬ËùÒÔË÷ĞÔĞ´ÕâÁË
+#å› ä¸ºä½¿ç”¨è¿™ä¸ªæ–¹æ³•ä¸€å®šéœ€è¦GetGlobalManageræ–¹æ³•ï¼Œè¦æœ‰importã€€public.defineç›¸å…³æ“ä½œï¼Œæ‰€ä»¥ç´¢æ€§å†™è¿™äº†
 def Log(LogPath,Content):
 	if not LogPath or not Content:
 		return
 	oManager=GetGlobalManager("txtlog")
 	if not oManager:
-		raise Exception('ÒâÏë²»µ½µÄ´íÎó£ºtxtlogÃ»ÓĞ±»³õÊ¼»¯')
-	#¾¡Á¿ÈÃ×ª³ÉÁĞ±íµÄ²Ù×÷²»³ö´í
+		raise Exception('æ„æƒ³ä¸åˆ°çš„é”™è¯¯ï¼štxtlogæ²¡æœ‰è¢«åˆå§‹åŒ–')
+	#å°½é‡è®©è½¬æˆåˆ—è¡¨çš„æ“ä½œä¸å‡ºé”™
 	if isinstance(Content,list) or isinstance(Content,dict) or isinstance(Content,int):
 		oManager.Write(LogPath,str(Content))
 	elif isinstance(Content,str):
 		oManager.Write(LogPath,Content)
 
 
-#ÓÃÓÚÔÚ²»Í¬Çé¿öÏÂÕıÈ·µ÷ÓÃ±¨¾¯Ä£¿é
+#ç”¨äºåœ¨ä¸åŒæƒ…å†µä¸‹æ­£ç¡®è°ƒç”¨æŠ¥è­¦æ¨¡å—
 def Alert(Content,IMNumberList,iReAlertNum=0,sLogName=PATH_LOG_ALERT_HISTORY):
 	if not Content or not IMNumberList:
-		Log(PATH_LOG_INFO,'Ã»ÓĞ´«¸ø±¨¾¯µÄ¶ÔÏó»òÄÚÈİ')
+		Log(PATH_LOG_INFO,'æ²¡æœ‰ä¼ ç»™æŠ¥è­¦çš„å¯¹è±¡æˆ–å†…å®¹')
 		return
 	oManager=GetGlobalManager("alert")
 	if not oManager:
-		Log(PATH_LOG_ERR,'¾¯¸æ£ºalertÃ»ÓĞ±»³õÊ¼»¯')
+		Log(PATH_LOG_ERR,'è­¦å‘Šï¼šalertæ²¡æœ‰è¢«åˆå§‹åŒ–')
 		return
-	#»ğĞÇºÅÖ»ÄÜÊÇÁĞ±í
+	#ç«æ˜Ÿå·åªèƒ½æ˜¯åˆ—è¡¨
 	if not isinstance(IMNumberList,list):
 		IMNumberList=[IMNumberList]
-	#ContentÖ»ÄÜÊÇ×Öµä»òÕßÁĞ±í
+	#Contentåªèƒ½æ˜¯å­—å…¸æˆ–è€…åˆ—è¡¨
 	if not isinstance(Content,dict) and not isinstance(Content,list):
 		Content=[Content]
 	
 	if isinstance(Content,list):
 		TmpList=[]
 		for IMNumber in IMNumberList:
-			if IMNumber in TmpList:		#ÁĞ±íÖĞ¿ÉÄÜÓĞÖØ¸´µÄ»ğĞÇºÅ£¬²»ĞèÒªÖØ¸´±¨¾¯
+			if IMNumber in TmpList:		#åˆ—è¡¨ä¸­å¯èƒ½æœ‰é‡å¤çš„ç«æ˜Ÿå·ï¼Œä¸éœ€è¦é‡å¤æŠ¥è­¦
 				continue
 			TmpList.append(IMNumber)
 			for sContent in Content:
@@ -72,31 +72,14 @@ def Alert(Content,IMNumberList,iReAlertNum=0,sLogName=PATH_LOG_ALERT_HISTORY):
 			oManager.Alert(Content,IMNumber,iReAlertNum,sLogName)
 
 
-def ExecShell(sShellCmd):
-	if not sShellCmd:
-		return
-	ShellCmdDict=GetGlobalManager('shelldict')
-	if not ShellCmdDict:
-		raise Exception('ÒâÏë²»µ½µÄ´íÎó£ºshelldictÃ»ÓĞ±»³õÊ¼»¯')
-	if ShellCmdDict.has_key(sShellCmd):
-		oShellCmd=ShellCmdDict[sShellCmd]
-		Result=oShellCmd.Start()
-		return Result
-	else:
-		oCustomCmd=ShellCmdDict['custom']
-		oCustomCmd.SetShellCmd(sShellCmd)
-		Result=oCustomCmd.Start()
-		return Result
-	
-	
-#»ñµÃµ±Ç°Ê±¼äµÄÖ¸¶¨¸ñÊ½£¬Èç%s,»ñµÃµ±Ç°Ê±¼äµÄ×Ö·û´®Ê±¼ä´Á,%S»ñµÃµ±Ç°µÄÃëÕë
+#è·å¾—å½“å‰æ—¶é—´çš„æŒ‡å®šæ ¼å¼ï¼Œå¦‚%s,è·å¾—å½“å‰æ—¶é—´çš„å­—ç¬¦ä¸²æ—¶é—´æˆ³,%Sè·å¾—å½“å‰çš„ç§’é’ˆ
 def GetTime(sFormat="%Y-%m-%d %H:%M:%S"):
 	t=time.localtime()
 	sTime=time.strftime(sFormat,t)
 	return sTime
 
 
-#»ñµÃÕûĞÎµÄÊ±¼ä´Á
+#è·å¾—æ•´å½¢çš„æ—¶é—´æˆ³
 def GetSecond(sUnit='s'):
 	FTime=time.time()
 	if sUnit=='s':
@@ -107,7 +90,7 @@ def GetSecond(sUnit='s'):
 		return int(FTime*1000*1000)
 
 
-#¸ñÊ½»¯Ö¸¶¨µÄÊ±¼ä´Á
+#æ ¼å¼åŒ–æŒ‡å®šçš„æ—¶é—´æˆ³
 def FormatTime(iTime,sFormat="%Y-%m-%d %H:%M:%S"):
 	if not isinstance(iTime, int):
 		iTime=int(iTime)
@@ -116,7 +99,7 @@ def FormatTime(iTime,sFormat="%Y-%m-%d %H:%M:%S"):
 	return sTime
 
 
-def Call_Out(cbfunc,iDelay,sFlag,iPeriod=False): #²ÎÊı£ºÒ»¸ö»Øµ÷º¯Êı£¬ÑÓ³Ù£¬±êÖ¾
+def Call_Out(cbfunc,iDelay,sFlag,iPeriod=False): #å‚æ•°ï¼šä¸€ä¸ªå›è°ƒå‡½æ•°ï¼Œå»¶è¿Ÿï¼Œæ ‡å¿—
 	oManager=GetGlobalManager("timer")
 	if not oManager:
 		return
@@ -124,7 +107,7 @@ def Call_Out(cbfunc,iDelay,sFlag,iPeriod=False): #²ÎÊı£ºÒ»¸ö»Øµ÷º¯Êı£¬ÑÓ³Ù£¬±êÖ¾
 
 
 def Remove_Call_Out(sFlag):
-	oManager=GetGlobalManager("timer") #»ñµÃÈ«¾Ö±äÁ¿ÖĞµÄtimer£¬Ê±¼äÀàµÄ¶ÔÏó£¬ËûÊÇÒ»¸ö¸ºÔğ¼ÆÊ±
+	oManager=GetGlobalManager("timer") #è·å¾—å…¨å±€å˜é‡ä¸­çš„timerï¼Œæ—¶é—´ç±»çš„å¯¹è±¡ï¼Œä»–æ˜¯ä¸€ä¸ªè´Ÿè´£è®¡æ—¶
 	if not oManager:
 		return  
 	oManager.UnRegister(sFlag)
@@ -135,25 +118,25 @@ def ExecManagerFunc(sMode,sFunc,*args):
 	if oManager:
 		func=getattr(oManager,sFunc)
 		return func(*args)
-	#sMode¶ÔÏóÊÇ²»»áÏú»ÙµÄ£¬ËüÊÇÖ÷½ø³Ì¡£Ö»ÓĞ¿ÉÄÜÔÚÖ´ĞĞµÄ³õÆÚÒòÎª±äÁ¿Öµ²»µ±»ò³õÊ¼»¯Òì³£¶ø±¨´í
-	sError='´íÎó£ºÃ»ÓĞ¶ÔÓ¦Ä£Ê½%sµÄÈ«¾Ö±äÁ¿¶ÔÏó'%(sMode)
+	#sModeå¯¹è±¡æ˜¯ä¸ä¼šé”€æ¯çš„ï¼Œå®ƒæ˜¯ä¸»è¿›ç¨‹ã€‚åªæœ‰å¯èƒ½åœ¨æ‰§è¡Œçš„åˆæœŸå› ä¸ºå˜é‡å€¼ä¸å½“æˆ–åˆå§‹åŒ–å¼‚å¸¸è€ŒæŠ¥é”™
+	sError='é”™è¯¯ï¼šæ²¡æœ‰å¯¹åº”æ¨¡å¼%sçš„å…¨å±€å˜é‡å¯¹è±¡'%(sMode)
 	raise Exception(sError)
 
 class Functor:
 	"""
-	¹¹ÔìÈÎÒâ²ÎÊıµÄCallbackº¯ÊıÀà¡£
-	@ivar _fn:          Callbackº¯Êı
+	æ„é€ ä»»æ„å‚æ•°çš„Callbackå‡½æ•°ç±»ã€‚
+	@ivar _fn:          Callbackå‡½æ•°
 	@type _fn:          function
-	@ivar _args:        ²ÎÊı
+	@ivar _args:        å‚æ•°
 	@type _args:        tuple
 	"""
 
 	def __init__(self,fn,*args):
 		"""
-		¹¹Ôìº¯Êı¡£
-		@param fn:          Callbackº¯Êı
+		æ„é€ å‡½æ•°ã€‚
+		@param fn:          Callbackå‡½æ•°
 		@type fn:           function
-		@param args:        ²ÎÊı
+		@param args:        å‚æ•°
 		@type args:         tuple
 		"""
 		self._fn=fn
@@ -162,10 +145,10 @@ class Functor:
 
 	def __call__(self,*args):
 		"""
- 		µ÷ÓÃCallbackº¯Êıfn¡£
-		@param args:        ²ÎÊı
+ 		è°ƒç”¨Callbackå‡½æ•°fnã€‚
+		@param args:        å‚æ•°
 		@type args:         tuple
-		@return:            Callbackº¯ÊıµÄ·µ»ØÖµ
+		@return:            Callbackå‡½æ•°çš„è¿”å›å€¼
 		"""
 		return self._fn(*(self._args+args))
 

@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 '''
-	³õÊ¼»¯¸÷Ïî¼à¿ØÊµÀı
+	åˆå§‹åŒ–å„é¡¹ç›‘æ§å®ä¾‹
 	demo:
 	>>import dev
-	>>print dev.GetDevInfo('ip')#½ö¶ÔlinuxÓĞĞ§
+	>>print dev.GetDevInfo('ip')#ä»…å¯¹linuxæœ‰æ•ˆ
 	>>10.32.12.32
 '''
 import netcark
@@ -14,16 +14,16 @@ def Init():
 	DevDict=InitData()
 	return DevDict
 
-def InitData():			#Èç¹û²»ÊÇÒªÓÃµÄÉè±¸·Ç³£¶à£¬²»ÒªÓÃÕâÖÖ¹ÜÀí·½Ê½¹ÜÀí£¬ÒòÎª²»¹»Ö±¹Û
+def InitData():			#å¦‚æœä¸æ˜¯è¦ç”¨çš„è®¾å¤‡éå¸¸å¤šï¼Œä¸è¦ç”¨è¿™ç§ç®¡ç†æ–¹å¼ç®¡ç†ï¼Œå› ä¸ºä¸å¤Ÿç›´è§‚
 	DevDict				={}
 	DevDict['netcark']	=netcark
 	DevDict['ip']		=ip
-	#ÅúÁ¿ÊµÀı»¯
+	#æ‰¹é‡å®ä¾‹åŒ–
 	for k,v in DevDict.iteritems():
 		DevDict[k]=v.CDev()
 	return DevDict
 
-#ÎÒ¿´²»µ½ÄãµÄÁ÷³ÌÈë¿Ú£¬ÕâÑùºÜ²»ºÃ£¬Ãş²»×ÅÍ·ÄÔ --³ÌĞò-»ù´¡ÑĞ·¢-»Æ³Ï¶÷(2978) 2016-1-25
+#æˆ‘çœ‹ä¸åˆ°ä½ çš„æµç¨‹å…¥å£ï¼Œè¿™æ ·å¾ˆä¸å¥½ï¼Œæ‘¸ä¸ç€å¤´è„‘ --ç¨‹åº-åŸºç¡€ç ”å‘-é»„è¯šæ©(2978) 2016-1-25
 def GetDevInfo(sDevName):
 	oManager=GetGlobalManager("devdict")
 	if oManager:

@@ -1,29 +1,12 @@
 # -*- coding:utf-8 -*-
 '''
-´´½¨Ê±¼ä: Mar 18, 2016
-×÷Õß: youzeshun  (IM: 8766)
-ÓÃÍ¾:ÓÎÏ··ş×¨ÓÃ±¨¾¯
+åˆ›å»ºæ—¶é—´: Mar 18, 2016
+ä½œè€…: youzeshun  (IM: 8766)
+ç”¨é€”:æ¸¸æˆæœä¸“ç”¨æŠ¥è­¦
 '''
-import os
 from public.define import *
 import gsconf
 import subprocess
-
-URL_QUOTE_SAFE="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_"
-URL_QUOTE_MAP={}
-
-#±ê×¼ASCIIÖ»ÓĞ128¸ö×Ö·û£¬ºóÀ´IBMÀ©Õ¹Îª256¸ö×Ö·û
-#ByteÊı¾İÀàĞÍ£¨×Ö½ÚĞÍ£©ÓÃÒ»¸ö×Ö½Ú£¨Byte£©´¢´æ£¬¿ÉÇø±ğ256¸öÊı×Ö¡£Ã¿¸öÊı×Ö¶¼ÓĞÎ¨Ò»ASCII¶ÔÓ¦
-for i in xrange(256):
-	k=v=chr(i)
-	#Èç¹ûascii²»ÔÚ°²È«×Ö·ûÖĞ£¬»òÕßÒÑ¾­µ½ÁËÀ©Õ¹²¿·Ö¡£Ôò½«Æä×ªÎª16½øÖÆ 
-	if i>=128 or not v in URL_QUOTE_SAFE:
-		v="%%%02X"%i			#%02X±íÊ¾×ªÎª16½øÖÆ£¬%%±íÊ¾Êä³ö%·ûºÅ
-	URL_QUOTE_MAP[k]=v			#×ª»»ºóµÄÖµÓÉÍøÕ¾×ª»Ø
-
-def UrlQuote(s):
-	return "".join(map(URL_QUOTE_MAP.__getitem__,s))
-
 
 class CGSAlert():
 	
@@ -32,17 +15,15 @@ class CGSAlert():
 		self.m_AlertLog=GetGlobalManager('logpath')+"/debug.txt"
 	
 	
-	def Alert(self,AlertMsg,IMNumber):
-		sEncodingContent=UrlQuote(AlertMsg)
-		sShellCmd='sh %s %s "%s" &'%(self.m_AlertScriptPath,IMNumber,sEncodingContent)
+	def Alert(self,sAlertMsg,IMNumber):
+		sShellCmd='sh %s %s "%s" &'%(self.m_AlertScriptPath,IMNumber,sAlertMsg)
 		Log(PATH_LOG_DEBUG,sShellCmd)
-		#¸Ã·½·¨ÓĞÆæ¹ÖµÄ»úÖÆ£¬µ±Í¬ÊÂµ÷ÓÃ¶à´Î¸Ã·½·¨µÄÊ±ºò£¬¸Ã·½·¨»áÊ§Ğ§£¡
 		oPopen=subprocess.Popen(sShellCmd,shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
-		#²»Ê¹ÓÃÏÂÊö·½·¨£¬stdout²úÉúµÄÄÚÈİÌ«¶à£¬»á³¬¹ıÏµÍ³µÄbuffer¡£µ¼ÖÂ³ÌĞò±»¿¨×¡£¡ÏÂÃæµÄ·½·¨²»»áµ¼ÖÂ³ÌĞò×èÈû
+		#ä¸ä½¿ç”¨ä¸‹è¿°æ–¹æ³•ï¼Œstdoutäº§ç”Ÿçš„å†…å®¹å¤ªå¤šï¼Œä¼šè¶…è¿‡ç³»ç»Ÿçš„bufferã€‚å¯¼è‡´ç¨‹åºè¢«å¡ä½ï¼ä¸‹é¢çš„æ–¹æ³•ä¸ä¼šå¯¼è‡´ç¨‹åºé˜»å¡
 		oPopen.communicate()
 		
 		
-#½â¾öÖØ¸´±¨¾¯µÄÎÊÌâ
+#è§£å†³é‡å¤æŠ¥è­¦çš„é—®é¢˜
 class CAlertManager(object):
 	
 	def __init__(self):
@@ -51,14 +32,14 @@ class CAlertManager(object):
 	
 	
 	def Register(self,sAlertMsg):
-		iTime=GetSecond('us')						#Õâ¸öµ¥Î»Ò»¶¨Òª·Ç³£Ğ¡£¬Ğ¡µ½¼´Ê¹Á¬ĞøÖ´ĞĞ±¨¾¯£¬Ò²²»»á·¢Éú¼üÃûÖØ¸´
+		iTime=GetSecond('us')						#è¿™ä¸ªå•ä½ä¸€å®šè¦éå¸¸å°ï¼Œå°åˆ°å³ä½¿è¿ç»­æ‰§è¡ŒæŠ¥è­¦ï¼Œä¹Ÿä¸ä¼šå‘ç”Ÿé”®åé‡å¤
 		self.m_AlertRecord[iTime]=sAlertMsg
 	
 	
 	def IsReAlert(self,sNameRegister):
 		for k,v in self.m_AlertRecord.items():
 			if sNameRegister==v:
-				sDebug='·¢ÏÖÖØ¸´µÄ±¨¾¯£¬×¢²áÃû£º%s'%(sNameRegister)
+				sDebug='å‘ç°é‡å¤çš„æŠ¥è­¦ï¼Œæ³¨å†Œåï¼š%s'%(sNameRegister)
 				Log(PATH_LOG_DEBUG,sDebug)
 				return 1
 		return 0
@@ -68,7 +49,7 @@ class CAlertManager(object):
 		iNowTime=GetSecond('us')
 		dTmp={}
 		for k,v in self.m_AlertRecord.items():
-			if iNowTime-k<TIME_REALERT*1000*1000:	#±ØĞë»»Ëãµ½ÄÉÃë½øĞĞ±È½Ï
+			if iNowTime-k<TIME_REALERT*1000*1000:	#å¿…é¡»æ¢ç®—åˆ°çº³ç§’è¿›è¡Œæ¯”è¾ƒ
 				dTmp[k]=v
 		self.m_AlertRecord=dTmp
 	
@@ -77,10 +58,10 @@ class CAlertManager(object):
 		if isinstance(AlertMsg,str):
 			sTitle=sBody=AlertMsg
 		elif isinstance(AlertMsg,dict):
-			sTitle=AlertMsg['title']				#±¨¾¯µÄ½áÂÛ
-			sBody=AlertMsg['body']					#±¨¾¯µÄÏà¹ØÊı¾İ
+			sTitle=AlertMsg['title']				#æŠ¥è­¦çš„ç»“è®º
+			sBody=AlertMsg['body']					#æŠ¥è­¦çš„ç›¸å…³æ•°æ®
 		else:
-			sErr='²»¿ÉÊ¹ÓÃµÄÀàĞÍ£¬AlertMsg:%s'%(AlertMsg)
+			sErr='ä¸å¯ä½¿ç”¨çš„ç±»å‹ï¼ŒAlertMsg:%s'%(AlertMsg)
 			Log(PATH_LOG_ERR, sErr)
 			return '',''
 		if not isinstance(sTitle,str):
@@ -91,9 +72,9 @@ class CAlertManager(object):
 	
 	
 	def Alert(self,AlertMsg,IMNumber,iReAlertNum=COUNT_ALERT_RETRY,sLogName=PATH_LOG_ALERT_HISTORY):
-		self.UpdateRecord()							#É¾³ı10·ÖÖÓÒÔÇ°³¢ÊÔµÄ±¨¾¯¼ÇÂ¼
+		self.UpdateRecord()							#åˆ é™¤10åˆ†é’Ÿä»¥å‰å°è¯•çš„æŠ¥è­¦è®°å½•
 		title,sAlertMsg=self.CustomMsg(AlertMsg)
-		sNameRegister=str(IMNumber)+str(title)		#ÏàÍ¬µÄ±¨¾¯ÊÇ·¢¸øÏàÍ¬»ğĞÇºÅµÄÏàÍ¬ÏûÏ¢
+		sNameRegister=str(IMNumber)+str(title)		#ç›¸åŒçš„æŠ¥è­¦æ˜¯å‘ç»™ç›¸åŒç«æ˜Ÿå·çš„ç›¸åŒæ¶ˆæ¯
 		if self.IsReAlert(sNameRegister):
 			return
 		self.Register(sNameRegister)

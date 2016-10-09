@@ -2,7 +2,7 @@
 '''
 Created on Feb 26, 2016
 author: youzeshun  (IM: 8766)
-ÓÃÍ¾£ºÓÃÓÚÆô¶¯ÓÎÏ··şÎñÆ÷µÄ¼à¿Ø
+ç”¨é€”ï¼šç”¨äºå¯åŠ¨æ¸¸æˆæœåŠ¡å™¨çš„ç›‘æ§
 '''
 
 import getopt
@@ -11,7 +11,7 @@ import gameserver
 
 def GetOpt():
 	lstOpt,lstArgs = getopt.getopt(sys.argv[1:],'',['logpath=','rootpath=',])
-	#²ÎÊıµÄ½âÎö¹ı³Ì,³¤²ÎÊıÎª--£¬¶Ì²ÎÊıÎª-  
+	#å‚æ•°çš„è§£æè¿‡ç¨‹,é•¿å‚æ•°ä¸º--ï¼ŒçŸ­å‚æ•°ä¸º-  
 	for sOption, sValue in lstOpt:  
 		if  sOption in ["--logpath"]:
 			sLogPath=sValue
@@ -19,14 +19,14 @@ def GetOpt():
 			sRootPath=sValue
 		
 	if not locals().has_key('sLogPath'):
-		raise UnboundLocalError("±ØĞëÉèÖÃÈÕÖ¾µÄÂ·¾¶")
+		raise UnboundLocalError("å¿…é¡»è®¾ç½®æ—¥å¿—çš„è·¯å¾„")
 	if not locals().has_key('sLogPath'):
-		raise UnboundLocalError("±ØĞëÉèÖÃ³ÌĞòµÄ¸ùÂ·¾¶(ÓÃÓÚpythonµ÷ÓÃshell½Å±¾)")
+		raise UnboundLocalError("å¿…é¡»è®¾ç½®ç¨‹åºçš„æ ¹è·¯å¾„(ç”¨äºpythonè°ƒç”¨shellè„šæœ¬)")
 		
 	return sLogPath,sRootPath
 
 
-#³õÊ¼»¯ÓÎÏ··şÎñÆ÷µÄ°ü£¬ÓÃÀ´½øĞĞĞÔÄÜ£¬Êı¾İ¼à¿Ø
+#åˆå§‹åŒ–æ¸¸æˆæœåŠ¡å™¨çš„åŒ…ï¼Œç”¨æ¥è¿›è¡Œæ€§èƒ½ï¼Œæ•°æ®ç›‘æ§
 def InitGameServer(sLogPath,sRootPath):
 	gameserver.Init(sLogPath,sRootPath)
 

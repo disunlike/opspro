@@ -2,23 +2,23 @@
 '''
 Created on 2016/4/22
 author: youzeshun  (IM: 8766)
-ÓÃÍ¾£º
-	²»ĞŞ¸ÄÕıÊ½´úÂëµÄÇé¿öÏÂ¶ÔalsÏîÄ¿½øĞĞ²âÊÔ
+ç”¨é€”ï¼š
+	ä¸ä¿®æ”¹æ­£å¼ä»£ç çš„æƒ…å†µä¸‹å¯¹alsé¡¹ç›®è¿›è¡Œæµ‹è¯•
 	
-Ô­Àí£º
-	ÓÃ»§ÊäÈëµÄµÚÒ»¸ö²ÎÊıÎªg_GlobalManagerDictµÄ¼üÃû
-	ÓÃ»§ÊäÈëµÄµÚ¶ş¸ö²ÎÊıÎªg_GlobalManagerDict¼üÖµµÄÄ£¿é·½·¨
-	ÓÃÓÚÊäÈëµÄµÚÈı¸ö²ÎÊıÎª·½·¨µÄ²ÎÊı£¨¿ÉÑ¡£©
+åŸç†ï¼š
+	ç”¨æˆ·è¾“å…¥çš„ç¬¬ä¸€ä¸ªå‚æ•°ä¸ºg_GlobalManagerDictçš„é”®å
+	ç”¨æˆ·è¾“å…¥çš„ç¬¬äºŒä¸ªå‚æ•°ä¸ºg_GlobalManagerDicté”®å€¼çš„æ¨¡å—æ–¹æ³•
+	ç”¨äºè¾“å…¥çš„ç¬¬ä¸‰ä¸ªå‚æ•°ä¸ºæ–¹æ³•çš„å‚æ•°ï¼ˆå¯é€‰ï¼‰
 
 Demo:
-	#²âÊÔalsÏîÄ¿µÄ±¨¾¯Ä£¿é£¨alert£©ÏÂµÄº¯Êı
+	#æµ‹è¯•alsé¡¹ç›®çš„æŠ¥è­¦æ¨¡å—ï¼ˆalertï¼‰ä¸‹çš„å‡½æ•°
 	python opspro/debugals.py --mod=alert --func=Alert --argv=8766,AlertMsg
 
-²ÎÊı£º
-	--mod		:	Ä£¿éÃû³Æ
-	--func		:	º¯ÊıÃû
-	--argv		:	²ÎÊı£¬Ê¹ÓÃ¶ººÅ¸ô¿ª
-	--startup	:	ÊÇ·ñÆô¶¯³ÌĞò
+å‚æ•°ï¼š
+	--mod		:	æ¨¡å—åç§°
+	--func		:	å‡½æ•°å
+	--argv		:	å‚æ•°ï¼Œä½¿ç”¨é€—å·éš”å¼€
+	--startup	:	æ˜¯å¦å¯åŠ¨ç¨‹åº
 '''
 
 import sys
@@ -27,13 +27,14 @@ import re
 import traceback
 from public.define import *
 import time
+import os
 
-g_LogPath='/tmp/tmplog'		#ÈÕÖ¾µÄÎ»ÖÃ
-g_RootPath=''				#»ù±¾¸ùÄ¿Â¼µÄÎ»ÖÃ£¬ÓÃÓÚÕÒ³ÌĞò¸ù¾İÎ»ÖÃÕÒ×ÊÔ´
+g_LogPath='/tmp/tmplog'		#æ—¥å¿—çš„ä½ç½®
+g_RootPath=''				#åŸºæœ¬æ ¹ç›®å½•çš„ä½ç½®ï¼Œç”¨äºæ‰¾ç¨‹åºæ ¹æ®ä½ç½®æ‰¾èµ„æº
 		
 def GetOpt():
 	OptList,Args = getopt.getopt(sys.argv[1:],'',['mod=','func=','argv=','startup=','runtime='])
-	#²ÎÊıµÄ½âÎö¹ı³Ì,³¤²ÎÊıÎª--£¬¶Ì²ÎÊıÎª-  
+	#å‚æ•°çš„è§£æè¿‡ç¨‹,é•¿å‚æ•°ä¸º--ï¼ŒçŸ­å‚æ•°ä¸º-  
 	sMod=sFunc=sSim=sRunTime=''
 	lstArgv=[]
 	for sOption, sValue in OptList:
@@ -51,15 +52,15 @@ def GetOpt():
 	return sMod,sFunc,lstArgv,sSim,sRunTime
 
 
-#¶àÊıÄ£¿éÊÇÕâÑù³õÊ¼»¯µÄ
+#å¤šæ•°æ¨¡å—æ˜¯è¿™æ ·åˆå§‹åŒ–çš„
 def InitMod(dLocal,sSim):
 	if not 'Init' in dLocal:
-		print 'Ã»ÓĞInit·½·¨£¬ÎŞ·¨³õÊ¼»¯'
+		print 'æ²¡æœ‰Initæ–¹æ³•ï¼Œæ— æ³•åˆå§‹åŒ–'
 		EndTest()
 	cbfunc=dLocal['Init']
 	cbfunc(g_LogPath,g_RootPath)
 	if sSim==1 and 'Start' in dLocal:
-		cbfunc=dLocal['Start']						#ÓĞĞ©²âÊÔ½ö½ö³õÊ¼»¯º¯Êı¾ÍºÃ£¬²»ĞèÒªÆô¶¯³ÌĞò£¡
+		cbfunc=dLocal['Start']						#æœ‰äº›æµ‹è¯•ä»…ä»…åˆå§‹åŒ–å‡½æ•°å°±å¥½ï¼Œä¸éœ€è¦å¯åŠ¨ç¨‹åºï¼
 		cbfunc()
 		
 def ExecComeBack(cbfunc,*ArgvList):
@@ -70,42 +71,42 @@ def ExecComeBack(cbfunc,*ArgvList):
 	if Result:
 		print Result
 
-#¶ÔÖ¸¶¨µÄÄ£¿é½øĞĞ²âÊÔ
+#å¯¹æŒ‡å®šçš„æ¨¡å—è¿›è¡Œæµ‹è¯•
 def TestMod(sMod,sFunc,*lstArgv):
 	if not sMod in g_GlobalManagerDict:
-		print 'Ä£¿é%s²»´æÔÚ'%(sMod)
+		print 'æ¨¡å—%sä¸å­˜åœ¨'%(sMod)
 		return
 	oMod=g_GlobalManagerDict[sMod]
 	cbfunc=getattr(oMod,sFunc,None)
 	
 	if not cbfunc:
-		print 'Ä£¿é%sÏÂµÄ·½·¨%s²»´æÔÚ'%(sMod,sFunc)
+		print 'æ¨¡å—%sä¸‹çš„æ–¹æ³•%sä¸å­˜åœ¨'%(sMod,sFunc)
 		return
 	ExecComeBack(cbfunc,*lstArgv)
 
-#Ïß³Ì×ÔÉ±£¬Èç¹ûÈÕÖ¾ÎÄ¼ş²»ÔÚtmplogÖĞÔòĞèÒªÇå³ı
+#çº¿ç¨‹è‡ªæ€ï¼Œå¦‚æœæ—¥å¿—æ–‡ä»¶ä¸åœ¨tmplogä¸­åˆ™éœ€è¦æ¸…é™¤
 def EndTest():
 	sShellCmd="ps -ef|grep %s|grep -v grep|awk '{print $2}'|xargs kill"%(sys.argv[0])
-	ExecShell(sShellCmd)	#Èç¹ûlinux´¦ÓÚ¼àÊÓÄ£Ê½ÏÂ£¬ºóÌ¨½ø³Ì±»killÉ±ËÀ»á´òÓ¡³öTerminated,set +mÍÆ³ö¼àÊÓÄ£Ê½
+	os.popen(sShellCmd)
 	
 def Debug(dLocal):
 	sMod,sFunc,lstArgv,sSim,sRunTime=GetOpt()
 	if not sFunc:
-		print '±ØĞëÓĞº¯ÊıÃû'
+		print 'å¿…é¡»æœ‰å‡½æ•°å'
 		return
-	InitMod(dLocal,sSim)						#³õÊ¼»¯Ä£¿éµÄ»·¾³
+	InitMod(dLocal,sSim)						#åˆå§‹åŒ–æ¨¡å—çš„ç¯å¢ƒ
 	try:
 		if sMod:
-			TestMod(sMod,sFunc,*lstArgv)	#²âÊÔÄ£¿éµÄº¯Êı
+			TestMod(sMod,sFunc,*lstArgv)	#æµ‹è¯•æ¨¡å—çš„å‡½æ•°
 		elif sFunc in dLocal:
 			cbfunc=dLocal[sFunc]
 			ExecComeBack(cbfunc,*lstArgv)
 		else:
-			print 'Ã»ÓĞÕÒµ½·½·¨%s'%(sFunc)
+			print 'æ²¡æœ‰æ‰¾åˆ°æ–¹æ³•%s'%(sFunc)
 	except Exception as oErr:
 		print oErr
 		traceback.print_exc()
-	finally:#É±ËÀÏß³Ì£¬½áÊø³ÌĞò
+	finally:#æ€æ­»çº¿ç¨‹ï¼Œç»“æŸç¨‹åº
 		if sRunTime:
 			time.sleep(int(sRunTime))
 		EndTest()
